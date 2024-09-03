@@ -182,13 +182,13 @@ jobs:
         run: ./Build/Register-FileSystemRepository.ps1 -Path '${{ env.PackageDownloadPath }}' -Name '${{ env.PSRepositoryName }}'
       
       - name: Download Module Nupkg
-        uses: actions/download-artifact@v2.0.9
+        uses: actions/download-artifact@v4.1.7
         with:
           name: $NupkgArtifactName
           path: $PackageDownloadPath
           
       - name: Download Pester Version Information
-        uses: actions/download-artifact@v2.0.9
+        uses: actions/download-artifact@v4.1.7
         with:
           name: $PesterInfoFileName
           path: $PesterInfoFilePath
@@ -249,7 +249,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Download Module Artifact
-        uses: actions/download-artifact@v2.0.9
+        uses: actions/download-artifact@v4.1.7
         with:
           name: $ModuleArtifactName
           path: $BuiltModulePath
@@ -265,7 +265,7 @@ jobs:
           "TagName=$tagname" | Add-Content -Path '${{ env.GITHUB_ENV }}'
           
       - name: Download Artifacts
-        uses: actions/download-artifact@v2.0.9
+        uses: actions/download-artifact@v4.1.7
         with:
           path: '$GITHUB_WORKSPACE/artifacts'
           
