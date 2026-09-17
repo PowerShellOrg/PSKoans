@@ -17,7 +17,7 @@ steps:
 
       $Params.Name = 'Pester'
       $Params.SkipPublisherCheck = $true
-      $Params.MinimumVersion = '5.0.2'
+      $Params.MinimumVersion = (Get-Module -ListAvailable ./PSKoans).RequiredModules.Where{$_.Name -eq 'Pester'}.Version
       $Params | Out-String | Write-Host
       Install-Module @Params
       $Params.Remove('SkipPublisherCheck')

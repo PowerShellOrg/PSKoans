@@ -37,45 +37,26 @@
             $MyInvocation.MyCommand.Module.ModuleBase
             $env:PSModulePath -split [System.IO.Path]::PathSeparator
         ) -join [System.IO.Path]::PathSeparator
+
+        $configuration = New-PesterConfiguration
+        $configuration.Output.Verbosity = 'None'
+        $configuration.Run.SkipRun = $true
+        $configuration.Run.PassThru = $true
+        $configuration.Run.TestExtension = ".Koans.ps1"
     }
     process {
-        Write-Verbose "Discovering koans in [$($KoanInfo.Name -join '], [')]"
+        $koanTopics = "[$($KoanInfo.Name -join '], [')]"
+        Write-Verbose "Discovering koans in $koanTopics"
+        $configuration.Run.Path = $KoanInfo.Path
 
-        $Result = & (Get-Module Pester) {
-            [CmdletBinding()]
-            param(
-                $Path,
-                $ExcludePath,
-                $SessionState
-            )
+        $Result = Invoke-Pester -Configuration $configuration
 
-            $_Pester_State_Backup = $state.PSObject.Copy()
-            $state.Stack = [System.Collections.Stack]@()
-            try {
-                Reset-TestSuiteState
-
-                # to avoid Describe thinking that we run in interactive mode
-                $invokedViaInvokePester = $true
-
-                $fileList = Find-File -Path $Path -ExcludePath $ExcludePath -Extension '.Koans.ps1'
-                $containers = foreach ($file in $fileList) {
-                    New-BlockContainerObject -File (Get-Item $file)
-                }
-
-                Find-Test -BlockContainer $containers -SessionState $SessionState
-            }
-            finally {
-                $state = $_Pester_State_Backup
-                Remove-Variable -Name _Pester_State_Backup
-            }
-        } -Path $KoanInfo.Path -SessionState $PSCmdlet.SessionState
-
-        $KoanCount += Measure-KoanTestBlock $Result
+        Write-Debug "Found $($Result.TotalCount) koans in $koanTopics"
+        $KoanCount += $Result.TotalCount
     }
     end {
+        $env:PSModulePath = $oldModulePath
         Write-Verbose "Total Koans: $KoanCount"
         $KoanCount
-
-        $env:PSModulePath = $oldModulePath
     }
 }

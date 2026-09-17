@@ -16,12 +16,12 @@ if ($OutputDirectory) {
     Import-Module "$PSScriptRoot/PSKoans"
     $Module = Get-Module -Name PSKoans
     $Dependencies = @(
-        $Module.RequiredModules.Name
-        $Module.NestedModules.Name
+        $Module.RequiredModules | Select-Object -Property Name, Version
+        $Module.NestedModules | Select-Object -Property Name, Version
     ).Where{ $_ }
 
     foreach ($Module in $Dependencies) {
-        Publish-Module -Name $Module -Repository FileSystem -NugetApiKey "Test-Publish"
+        Publish-Module -Name $Module.Name -Repository FileSystem -NugetApiKey "Test-Publish" -RequiredVersion $Module.Version
     }
 }
 
