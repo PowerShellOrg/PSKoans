@@ -24,7 +24,7 @@ param(
     [ArgumentCompleter( {
             param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
             try {
-                Get-PSakeScriptTasks -BuildFile './psakeFile.ps1' -ErrorAction 'Stop' |
+                Get-PSakeScriptTasks -BuildFile (Join-Path $PSScriptRoot 'psakeFile.ps1') -ErrorAction 'Stop' |
                     Where-Object { $_.Name -like "$WordToComplete*" } |
                     Select-Object -ExpandProperty 'Name'
             }
@@ -39,7 +39,8 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$psakeFile = './psakeFile.ps1'
+$requirementsFile = Join-Path $PSScriptRoot 'requirements.psd1'
+$psakeFile = Join-Path $PSScriptRoot 'psakeFile.ps1'
 
 if ($Bootstrap) {
     if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
@@ -50,10 +51,10 @@ if ($Bootstrap) {
         Install-Module -Name PSDepend -Repository PSGallery -Scope CurrentUser -Force -RequiredVersion '0.3.8'
     }
     Import-Module -Name PSDepend -Verbose:$false
-    Invoke-PSDepend -Path './requirements.psd1' -Install -Import -Force -WarningAction SilentlyContinue
+    Invoke-PSDepend -Path $requirementsFile -Install -Import -Force -WarningAction SilentlyContinue
 }
 else {
-    Invoke-PSDepend -Path './requirements.psd1' -Import -Force -WarningAction SilentlyContinue
+    Invoke-PSDepend -Path $requirementsFile -Import -Force -WarningAction SilentlyContinue
 }
 
 if ($PSCmdlet.ParameterSetName -eq 'Help') {

@@ -3,7 +3,13 @@
 
 BeforeDiscovery {
     if ($null -eq $env:BHProjectName) {
-        .\build.ps1 -Task Build
+        # Run the build in a child process -- build.ps1 calls `exit` on completion, which
+        # would otherwise terminate the host process running this test file.
+        & pwsh -NoProfile -File '.\build.ps1' -Task Build
+        if ($LASTEXITCODE -ne 0) {
+            throw 'Failed to build PSKoans before running tests.'
+        }
+        Set-BuildEnvironment -Force
     }
     $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
     $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
@@ -20,21 +26,19 @@ BeforeDiscovery {
 Describe 'Invoke-Koan' {
     InModuleScope 'PSKoans' {
         BeforeAll {
-            $script:controlTest = "$PSScriptRoot/ControlTests/Invoke-Koan.Control_Tests.ps1"
+            $script:controlTest = Resolve-Path "$PSScriptRoot/ControlTests/Invoke-Koan.Control_Tests.ps1"
         }
 
         It 'runs the test successfully' {
-            { 
-                Invoke-Koan @{ Script = $script:controlTest }
-            } | Should -Not -Throw
+            Invoke-Koan  -ParameterSplat @{ Script = $script:controlTest } | Should -Not -Throw
         }
 
         It 'produces output with -PassThru' {
-            Invoke-Koan @{ Script = $script:controlTest; PassThru = $true } | Should -Not -BeNullOrEmpty
+            Invoke-Koan -ParameterSplat @{ Script = $script:controlTest; PassThru = $true } | Should -Not -BeNullOrEmpty
         }
 
         It 'correctly reports test results' {
-            $Results = Invoke-Koan @{ Script = $script:controlTest; PassThru = $true }
+            $Results = Invoke-Koan -ParameterSplat @{ Script = $script:controlTest; PassThru = $true }
 
             $Results.TotalCount | Should -Be 2
             $Results.PassedCount | Should -Be 0
@@ -42,7 +46,7 @@ Describe 'Invoke-Koan' {
         }
 
         It 'reports only expected exception types' {
-            $Results = Invoke-Koan @{ Script = $script:controlTest; PassThru = $true }
+            $Results = Invoke-Koan -ParameterSplat @{ Script = $script:controlTest; PassThru = $true }
 
             $Results.Tests.ErrorRecord.Exception |
                 ForEach-Object -MemberName GetType |

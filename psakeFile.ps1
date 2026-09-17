@@ -7,7 +7,7 @@ Properties {
 
     # Test configuration -- the module must be imported from the staged output before
     # Pester runs since the test suite expects `PSKoans` to already be loaded/resolvable
-    $PSBPreference.Test.RootDir = Join-Path $ENV:BHProjectPath 'Tests'
+    $PSBPreference.Test.RootDir = Join-Path $PSScriptRoot 'Tests'
     $PSBPreference.Test.ImportModule = $true
     $PSBPreference.Test.OutputFile = 'out/testResults.xml'
     $PSBPreference.Test.OutputFormat = 'JUnitXml'
