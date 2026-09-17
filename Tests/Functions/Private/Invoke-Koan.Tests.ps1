@@ -1,4 +1,5 @@
 #Requires -Module @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
+# cspell:ignore BHPS
 
 BeforeDiscovery {
     if ($null -eq $env:BHProjectName) {
@@ -17,46 +18,35 @@ BeforeDiscovery {
 }
 
 Describe 'Invoke-Koan' {
-
-    BeforeAll {
-        $testFile = @{ Script = "$PSScriptRoot/ControlTests/Invoke-Koan.Control_Tests.ps1" }
-    }
-
-    It 'runs the test successfully' {
-        {
-            InModuleScope 'PSKoans' -Parameters $testFile {
-                param($Script)
-                Invoke-Koan @{ Script = $Script }
-            }
-        } | Should -Not -Throw
-    }
-
-    It 'produces output with -Passthru' {
-        InModuleScope 'PSKoans' -Parameters $testFile {
-            param($Script)
-            Invoke-Koan @{ Script = $Script; PassThru = $true }
-        } | Should -Not -BeNullOrEmpty
-    }
-
-    It 'correctly reports test results' {
-        $Results = InModuleScope 'PSKoans' -Parameters $testFile {
-            param($Script)
-            Invoke-Koan @{ Script = $Script; PassThru = $true }
+    InModuleScope 'PSKoans' {
+        BeforeAll {
+            $script:controlTest = "$PSScriptRoot/ControlTests/Invoke-Koan.Control_Tests.ps1"
         }
 
-        $Results.TotalCount | Should -Be 2
-        $Results.PassedCount | Should -Be 0
-        $Results.FailedCount | Should -Be 2
-    }
-
-    It 'reports only expected exception types' {
-        $Results = InModuleScope 'PSKoans' -Parameters $testFile {
-            param($Script)
-            Invoke-Koan @{ Script = $Script; PassThru = $true }
+        It 'runs the test successfully' {
+            { 
+                Invoke-Koan @{ Script = $script:controlTest }
+            } | Should -Not -Throw
         }
 
-        $Results.Tests.ErrorRecord.Exception |
-            ForEach-Object -MemberName GetType |
-            Should -Be @([Exception], [NotImplementedException])
+        It 'produces output with -PassThru' {
+            Invoke-Koan @{ Script = $script:controlTest; PassThru = $true } | Should -Not -BeNullOrEmpty
+        }
+
+        It 'correctly reports test results' {
+            $Results = Invoke-Koan @{ Script = $script:controlTest; PassThru = $true }
+
+            $Results.TotalCount | Should -Be 2
+            $Results.PassedCount | Should -Be 0
+            $Results.FailedCount | Should -Be 2
+        }
+
+        It 'reports only expected exception types' {
+            $Results = Invoke-Koan @{ Script = $script:controlTest; PassThru = $true }
+
+            $Results.Tests.ErrorRecord.Exception |
+                ForEach-Object -MemberName GetType |
+                Should -Be @([Exception], [NotImplementedException])
+        }
     }
 }

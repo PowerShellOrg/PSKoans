@@ -1,4 +1,29 @@
 ﻿function Show-Advice {
+    <#
+    .SYNOPSIS
+        Prints a piece of advice to the screen.
+
+    .DESCRIPTION
+        Prints a piece of advice to the screen.
+        Advice snippets are stored in a small library file in the module folder.
+
+    .PARAMETER Name
+        The title or name of the specific advice snippet to display.
+
+    .EXAMPLE
+        Get-Advice
+
+        Print a random piece of advice to the screen.
+
+    .NOTES
+        Author: Friedrich Weinmann (@FriedrichWeinmann)
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/Register-Advice.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+    #>
     [CmdletBinding(HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Show-Advice.md')]
     [Alias('Get-Advice')]
     [OutputType([void])]

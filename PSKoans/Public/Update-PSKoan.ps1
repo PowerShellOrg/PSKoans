@@ -1,6 +1,55 @@
 using namespace System.Collections.Generic
 
 function Update-PSKoan {
+    <#
+    .SYNOPSIS
+        Update the user Koan directory with new topics and koans.
+
+    .DESCRIPTION
+        Update the user Koan directory with new topics.
+        Topics will be moved to new directories if appropriate.
+        Old files will be removed.
+
+        Existing koan topics are updated with new koans.
+        Progress is preserved as much as possible.
+
+    .PARAMETER IncludeModule
+        Update the default PowerShell Koans as well as Koans for the specified module.
+        Wildcards are supported.
+
+    .PARAMETER Module
+        Update Koans in the specified module only.
+        Wildcards are supported.
+
+    .PARAMETER Topic
+        Updates the specified topic from the module.
+        Wildcards are supported.
+
+    .EXAMPLE
+        Update-PSKoan -Topic AboutCompareObject
+
+        The topic AboutCompareObject will be added if it is not already present.
+        If it is already present, the current copy will be compared to the base module copy.
+        If any koans are missing from the user's copy, they will be added.
+        If any koans have been removed from the module copy, they will be removed from the user's copy.
+
+    .EXAMPLE
+        Update-PSKoan
+
+        All missing topics and koans will be copied from the module.
+
+    .NOTES
+        Author: Chris Dent (@indented-automation)
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/Reset-PSKoan.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+    #>
     [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'TopicOnly', ConfirmImpact = "High",
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Update-PSKoan.md')]
     [OutputType([void])]
