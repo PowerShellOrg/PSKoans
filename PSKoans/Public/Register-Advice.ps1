@@ -1,4 +1,29 @@
 ﻿function Register-Advice {
+    <#
+    .SYNOPSIS
+        Causes powershell to write a random piece of advice on each start.
+
+    .DESCRIPTION
+        Causes powershell to write a random piece of advice on each start.
+        This is done by creating / modifying the powershell profile to call `Show-Advice` on each session start.
+
+    .PARAMETER TargetProfile
+        Specify a named profile to modify.
+
+    .EXAMPLE
+        Register-Advice
+
+        Causes powershell to write a random piece of advice on each start.
+
+    .NOTES
+        Author: Friedrich Weinmann (@FriedrichWeinmann)
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/Show-Advice.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+    #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Register-Advice.md')]
     [OutputType([void])]

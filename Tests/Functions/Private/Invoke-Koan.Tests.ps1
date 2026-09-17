@@ -1,46 +1,56 @@
-﻿#Requires -Modules PSKoans
+#Requires -Module @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
+# cspell:ignore BHPS
+
+BeforeDiscovery {
+    if ($null -eq $env:BHProjectName) {
+        # Run the build in a child process -- build.ps1 calls `exit` on completion, which
+        # would otherwise terminate the host process running this test file.
+        & pwsh -NoProfile -File '.\build.ps1' -Task Build
+        if ($LASTEXITCODE -ne 0) {
+            throw 'Failed to build PSKoans before running tests.'
+        }
+        Set-BuildEnvironment -Force
+    }
+    $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
+    $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
+    $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
+    $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
+    $env:PSModulePath = $outputModDir + [IO.Path]::PathSeparator + $env:PSModulePath
+
+    # Remove all versions of the module from the session. Pester can't handle multiple versions.
+    Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
+    Import-Module -Name $outputModVerManifest -Verbose:$false -ErrorAction Stop
+}
 
 Describe 'Invoke-Koan' {
-
-    BeforeAll {
-        $testFile = @{ Script = "$PSScriptRoot/ControlTests/Invoke-Koan.Control_Tests.ps1" }
-    }
-
-    It 'runs the test successfully' {
-        {
-            InModuleScope 'PSKoans' -Parameters $testFile {
-                param($Script)
-                Invoke-Koan @{ Script = $Script }
-            }
-        } | Should -Not -Throw
-    }
-
-    It 'produces output with -Passthru' {
-        InModuleScope 'PSKoans' -Parameters $testFile {
-            param($Script)
-            Invoke-Koan @{ Script = $Script; PassThru = $true }
-        } | Should -Not -BeNullOrEmpty
-    }
-
-    It 'correctly reports test results' {
-        $Results = InModuleScope 'PSKoans' -Parameters $testFile {
-            param($Script)
-            Invoke-Koan @{ Script = $Script; PassThru = $true }
+    InModuleScope 'PSKoans' {
+        BeforeAll {
+            $script:controlTest = Resolve-Path "$PSScriptRoot/ControlTests/Invoke-Koan.Control_Tests.ps1"
         }
 
-        $Results.TotalCount | Should -Be 2
-        $Results.PassedCount | Should -Be 0
-        $Results.FailedCount | Should -Be 2
-    }
-
-    It 'reports only expected exception types' {
-        $Results = InModuleScope 'PSKoans' -Parameters $testFile {
-            param($Script)
-            Invoke-Koan @{ Script = $Script; PassThru = $true }
+        It 'runs the test successfully' {
+            { Invoke-Koan -ParameterSplat @{ Path = $script:controlTest } } | Should -Not -Throw
         }
 
-        $Results.Tests.ErrorRecord.Exception |
-            ForEach-Object -MemberName GetType |
-            Should -Be @([Exception], [NotImplementedException])
+        It 'produces output with -PassThru' {
+            Invoke-Koan -ParameterSplat @{ Path = $script:controlTest; PassThru = $true } | Should -Not -BeNullOrEmpty
+        }
+
+        It 'correctly reports test results' {
+            $Results = Invoke-Koan -ParameterSplat @{ Path = $script:controlTest; PassThru = $true }
+
+            $Results.TotalCount | Should -Be 2
+            $Results.PassedCount | Should -Be 0
+            $Results.FailedCount | Should -Be 2
+        }
+
+        It 'reports only expected exception types' {
+            $Results = Invoke-Koan -ParameterSplat @{ Path = $script:controlTest; PassThru = $true }
+
+            $Results.Tests.ErrorRecord.Exception |
+                ForEach-Object -MemberName GetType |
+                Should -Be @([Exception], [NotImplementedException])
+        }
     }
 }

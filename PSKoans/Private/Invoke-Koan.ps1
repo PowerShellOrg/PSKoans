@@ -11,7 +11,7 @@
         Defines the hashtable that will be splatted into Invoke-Pester in the new PowerShell instance.
 
     .EXAMPLE
-        Invoke-Koan @{ Script = '.\AboutArrays.Koans.ps1'; PassThru = $true; Show = 'None' }
+        Invoke-Koan @{ Path = '.\AboutArrays.Koans.ps1'; PassThru = $true; Show = 'None' }
 
         Triggers Pester to assess the AboutArrays file in the current directory and pass back the complete tests object,
         hiding the standard test results display.
@@ -33,7 +33,7 @@
     end {
         try {
             $Requirements = [System.Management.Automation.Language.Parser]::ParseFile(
-                $ParameterSplat.Script,
+                $ParameterSplat.Path,
                 [ref]$null,
                 [ref]$null
             ).Ast.ScriptRequirements

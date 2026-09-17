@@ -1,13 +1,35 @@
-#Requires -Modules PSKoans
+#Requires -Module @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
+
+BeforeDiscovery {
+    if ($null -eq $env:BHProjectName) {
+        # Run the build in a child process -- build.ps1 calls `exit` on completion, which
+        # would otherwise terminate the host process running this test file.
+        & pwsh -NoProfile -File '.\build.ps1' -Task Build
+        if ($LASTEXITCODE -ne 0) {
+            throw 'Failed to build PSKoans before running tests.'
+        }
+        Set-BuildEnvironment -Force
+    }
+    $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
+    $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
+    $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
+    $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
+    $env:PSModulePath = $outputModDir + [IO.Path]::PathSeparator + $env:PSModulePath
+
+    # Remove all versions of the module from the session. Pester can't handle multiple versions.
+    Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
+    Import-Module -Name $outputModVerManifest -Verbose:$false -ErrorAction Stop
+}
 
 Describe "Register-Advice" {
 
     Context "Profile Folder/File Missing" {
 
         BeforeAll {
-            Mock New-Item -Verifiable
-            Mock Test-Path { $false } -Verifiable
-            Mock Set-Content -ParameterFilter { $Value -eq "Show-Advice" } -Verifiable
+            Mock New-Item -Verifiable -ModuleName 'PSKoans'
+            Mock Test-Path { $false } -Verifiable -ModuleName 'PSKoans'
+            Mock Set-Content -ParameterFilter { $Value -eq "Show-Advice" } -Verifiable -ModuleName 'PSKoans'
         }
 
         It 'should create the $profile if it does not exist' {
@@ -19,9 +41,9 @@ Describe "Register-Advice" {
     Context "Profile Already Exists" {
 
         BeforeAll {
-            Mock 'Test-Path' { $true } -Verifiable
-            Mock 'Select-String' { $false } -Verifiable
-            Mock 'Add-Content' -Verifiable
+            Mock 'Test-Path' { $true } -Verifiable -ModuleName 'PSKoans'
+            Mock 'Select-String' { $false } -Verifiable -ModuleName 'PSKoans'
+            Mock 'Add-Content' -Verifiable -ModuleName 'PSKoans'
         }
 
         It "adds content to the profile if it already exists (Get|Set)-Advice" {
@@ -33,10 +55,11 @@ Describe "Register-Advice" {
     Context "Parameter Validation" {
 
         BeforeAll {
-            Mock Test-Path { $false } -ParameterFilter { $Path -eq $ProfileFolder }
-            Mock New-Item
-            Mock Test-Path { $false } -ParameterFilter { $Path -eq $ProfilePath }
-            Mock Set-Content -ParameterFilter { $Value -eq "Show-Advice" }
+            Mock Test-Path { $false } -ModuleName 'PSKoans'
+            Mock New-Item -ModuleName 'PSKoans'
+            Mock Select-String { $false } -ModuleName 'PSKoans'
+            Mock Add-Content -ModuleName 'PSKoans'
+            Mock Set-Content -ParameterFilter { $Value -eq "Show-Advice" } -ModuleName 'PSKoans'
         }
 
         It "throws if an invalid value is supplied for -TargetProfile" {

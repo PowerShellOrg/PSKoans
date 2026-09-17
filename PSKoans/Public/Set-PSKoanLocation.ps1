@@ -1,4 +1,41 @@
 function Set-PSKoanLocation {
+    <#
+    .SYNOPSIS
+        Sets the PSKoans folder location where koan lesson files will be stored and retrieved.
+
+    .DESCRIPTION
+        Sets the `KoanLocation` configuration setting in order to modify where the module looks for and stores its koan lesson files.
+
+    .PARAMETER PassThru
+        Whether the function should pass the provided `-Path` value down the pipe when the configuration has been changed.
+
+    .PARAMETER Path
+        Specify the path to set the koan location to.
+
+    .EXAMPLE
+        Set-PSKoanLocation -Path C:\PSKoans
+
+        Measure-Karma
+
+        Sets the koan folder location to 'C:\PSKoans' and then invokes Measure-Karma to examine that location for koan files.
+
+    .NOTES
+        Author: Joel Sallow (@vexx32)
+
+        The PSKoans folder specified will become the location to look for koans files.
+        If this location is empty or nonexistent, it will be created and populated with a pristine copy of the koans library when Measure-Karma is run next.
+
+        You can optionally populate it yourself by running `Show-Karma -Reset` following use of this cmdlet.
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoanLocation.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/Move-PSKoanLibrary.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+    #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanLocation.md')]
     [OutputType([void])]

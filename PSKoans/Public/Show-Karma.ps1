@@ -1,4 +1,76 @@
 function Show-Karma {
+    <#
+    .SYNOPSIS
+        Reflect on your progress and check your answers.
+
+    .DESCRIPTION
+        Show-Karma executes Pester against the koans to evaluate if you have made the necessary corrections for success.
+        The default output mode is to the information stream, with decorated flavour text and progress information.
+
+        If you want a more data-oriented results report, use `Get-Karma` instead.
+
+    .PARAMETER ClearScreen
+        Clears the console host before displaying the meditation prompt.
+
+    .PARAMETER Contemplate
+        Opens your local koans library.
+        If VS Code is installed, it will start VS Code in the folder.
+        Otherwise, the folder is simply opened in a file explorer.
+        If you have VS Code Insiders installed, you can set `$env:PSKoans_EditorPreference = "code-insiders"` to indicate VS Code Insiders should be opened instead.
+
+    .PARAMETER Detailed
+        Adds a summarized view of the current topic file to the meditation prompt.
+        The summary will contain a full list of all koans in the file, and indicate their current status.
+
+    .PARAMETER IncludeModule
+        Show Karma for the default PowerShell Koans as well as Koans for the specified module.
+        Wildcards are supported.
+
+    .PARAMETER Library
+        Opens the current `KoanLocation` folder in the preferred editor.
+        To set the preferred editor, use `Set-PSKoanSetting`.
+        If the preferred editor cannot be found or the setting is cleared, the folder will be opened in the default handler.
+        This should be Windows Explorer on Windows, Finder on Mac, etc.
+
+    .PARAMETER List
+        Output a complete list of available koan topics.
+
+    .PARAMETER Module
+        Show Karma for Koans in the specified module only.
+        Wildcards are supported.
+
+    .PARAMETER Topic
+        Execute koans only from the selected Topic(s).
+        Wildcard patterns are permitted.
+        When provided along with `-Contemplate`, the targeted topic will be respected.
+
+    .EXAMPLE
+        Show-Karma
+
+        Assesses the koan lessons, and displays the meditation prompt with the results.
+
+    .EXAMPLE
+        Show-Karma -Contemplate
+
+        Opens the current koan file in the editor specified by the `Editor` setting.
+        Use `Set-PSKoanSetting` to change the editor used.
+
+        If a known editor (`code`, `code-insiders`, `codium`, or `atom`) is used, PSKoans will pass along line information as well.
+
+    .EXAMPLE
+        Show-Karma -Contemplate -Topic AboutComparison
+
+        Opens the specified `AboutComparison` topic file in the preferred editor.
+
+    .NOTES
+        Author: Joel Sallow (@vexx32)
+
+    .LINK
+        https://github.com/vexx32/PSKoans/blob/main/docs/Get-Karma.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+    #>
     [CmdletBinding(DefaultParameterSetName = 'Default',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Show-Karma.md')]
     [OutputType([void])]

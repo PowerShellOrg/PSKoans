@@ -1,4 +1,26 @@
-#Requires -Modules PSKoans
+#Requires -Module @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
+
+BeforeDiscovery {
+    if ($null -eq $env:BHProjectName) {
+        # Run the build in a child process -- build.ps1 calls `exit` on completion, which
+        # would otherwise terminate the host process running this test file.
+        & pwsh -NoProfile -File '.\build.ps1' -Task Build
+        if ($LASTEXITCODE -ne 0) {
+            throw 'Failed to build PSKoans before running tests.'
+        }
+        Set-BuildEnvironment -Force
+    }
+    $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
+    $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
+    $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
+    $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
+    $env:PSModulePath = $outputModDir + [IO.Path]::PathSeparator + $env:PSModulePath
+
+    # Remove all versions of the module from the session. Pester can't handle multiple versions.
+    Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
+    Import-Module -Name $outputModVerManifest -Verbose:$false -ErrorAction Stop
+}
 
 Describe 'Get-Karma' {
 
@@ -52,18 +74,18 @@ Describe 'Get-Karma' {
 
         BeforeAll {
             Mock 'Measure-Koan' -ModuleName 'PSKoans'
-            Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'User' }
-            Mock 'Update-PSKoan' { throw 'Prevent recursion' }
-            Mock 'Write-Warning'
+            Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'User' } -ModuleName 'PSKoans'
+            Mock 'Update-PSKoan' { throw 'Prevent recursion' } -ModuleName 'PSKoans'
+            Mock 'Write-Warning' -ModuleName 'PSKoans'
         }
 
         It 'should attempt to populate koans and then recurse to reassess' {
             { Get-Karma } | Should -Throw -ExpectedMessage 'Prevent recursion'
-            Should -Invoke 'Update-PSKoan' -Scope Context
+            Should -Invoke 'Update-PSKoan' -Scope Context -ModuleName 'PSKoans'
         }
 
         It 'displays a warning before initiating a reset' {
-            Should -Invoke 'Write-Warning' -Scope Context
+            Should -Invoke 'Write-Warning' -Scope Context -ModuleName 'PSKoans'
         }
 
         It 'throws an error if a Topic is specified that matches nothing' {
@@ -74,13 +96,13 @@ Describe 'Get-Karma' {
     Context 'With -ListTopics Parameter' {
 
         BeforeAll {
-            Mock 'Get-PSKoan'
+            Mock 'Get-PSKoan' -ModuleName 'PSKoans'
         }
 
         It 'lists all the koan topics' {
             Get-Karma -ListTopics
 
-            Should -Invoke 'Get-PSKoan'
+            Should -Invoke 'Get-PSKoan' -ModuleName 'PSKoans'
         }
     }
 
@@ -104,13 +126,12 @@ Describe 'Get-Karma' {
     Context 'Behaviour When All Koans Are Completed' {
 
         BeforeAll {
-            Mock 'Get-PSKoanLocation' {
-                Join-Path -Path $TestDrive -ChildPath 'CompletedKoan'
-            }
+            $completedKoanLocation = Join-Path -Path $TestDrive -ChildPath 'CompletedKoan'
+            Mock 'Get-PSKoanLocation' -ModuleName 'PSKoans' { $completedKoanLocation }
 
             Mock 'Measure-Koan' -ModuleName 'PSKoans' -MockWith { 2 }
 
-            $TestFile = Join-Path -Path (Get-PSKoanLocation) -ChildPath 'Group\SelectedTopicTest.Koans.ps1'
+            $TestFile = Join-Path -Path $completedKoanLocation -ChildPath 'Group\SelectedTopicTest.Koans.ps1'
             New-Item -Path (Split-Path $TestFile -Parent) -ItemType Directory -Force
             Set-Content -Path $TestFile -Value @'
                 using module PSKoans

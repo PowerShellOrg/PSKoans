@@ -1,4 +1,44 @@
 function Set-PSKoanSetting {
+    <#
+    .SYNOPSIS
+        Modifies the configuration settings for PSKoans.
+
+    .DESCRIPTION
+        Sets module configuration data in a JSON file in the user's $HOME directory.
+
+    .PARAMETER Name
+        Specifies which setting value to modify.
+
+    .PARAMETER Reset
+        Resets the user's settings to the default values.
+
+    .PARAMETER Settings
+        A hashtable containing one or more settings to modify and their values.
+
+    .PARAMETER Value
+        Provides a value to apply to the target setting.
+
+    .EXAMPLE
+        Set-PSKoanSetting -Name LibraryFolder -Value "./PSKoans"
+
+        Sets the library folder location to the `PSKoans` folder in the current directory.
+
+    .EXAMPLE
+        Set-PSKoanSetting -Name Editor -Value "atom"
+
+        Sets the text editor used for `Show-Karma -Contemplate` to GitHub Atom. For a
+        list of text editors known to PSKoans, see Example 2 in the documentation for
+        [Show-Karma -Contemplate](https://github.com/vexx32/PSKoans/tree/main/docs/Show-Karma.md).
+
+    .NOTES
+        Author: Joel Sallow (@vexx32)
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoanSetting.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+    #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Single',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanSetting.md')]
     [OutputType([void])]

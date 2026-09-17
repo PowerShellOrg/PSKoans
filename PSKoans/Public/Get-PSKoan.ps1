@@ -1,4 +1,70 @@
 function Get-PSKoan {
+    <#
+    .SYNOPSIS
+        Gets koan topic metadata for each topic.
+
+    .DESCRIPTION
+        Get-PSKoan finds Koans in either the Module or User locations.
+        Koan information includes position and module information, as well as topic name.
+
+    .PARAMETER IncludeModule
+        Get default PowerShell Koans as well as Koans for the specified module.
+        Wildcards are supported.
+
+    .PARAMETER ListModules
+        List the modules included with PSKoans.
+
+    .PARAMETER Module
+        Get Koans for the specified module only.
+        Wildcards are supported.
+
+    .PARAMETER Scope
+        Get koans from the specified scope.
+        The default scope is Module.
+        User scope gets Koan information from the location used by Get-PSKoanLocation.
+
+    .PARAMETER SkipAttributeParsing
+        By default, Get-PSKoan attempts to retrieve the Position and Module information from the Koan attribute in each file.
+        This process may be skipped by using this parameter.
+
+    .PARAMETER Topic
+        Reset the specified topic or topics.
+        Wildcards are supported.
+
+    .EXAMPLE
+        Get-PSKoan
+
+        Get all Koans in the PSKoans module, excluding koans for individual modules.
+
+    .EXAMPLE
+        Get-PSKoan -IncludeModule *
+
+        Get all Koans in the PSKoans module, include all koans for individual PowerShell modules.
+
+    .EXAMPLE
+        Get-PSKoan -Topic AboutArrays
+
+        Get information about the AboutArrays koans.
+
+    .EXAMPLE
+        Get-PSKoan -Module ActiveDirectory
+
+        Get koans from the ActiveDirectory module only.
+
+    .EXAMPLE
+        Get-PSKoan -Scope User
+
+        Get all Koans in the User location, excluding koans for individual modules.
+
+    .NOTES
+        Author: Chris Dent (@indented-automation)
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+    #>
     [CmdletBinding(DefaultParameterSetName = 'IncludeModule',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md')]
     [OutputType('PSKoans.KoanInfo')]

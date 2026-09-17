@@ -1,4 +1,26 @@
-#Requires -Modules PSKoans
+#Requires -Module @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
+
+BeforeDiscovery {
+    if ($null -eq $env:BHProjectName) {
+        # Run the build in a child process -- build.ps1 calls `exit` on completion, which
+        # would otherwise terminate the host process running this test file.
+        & pwsh -NoProfile -File '.\build.ps1' -Task Build
+        if ($LASTEXITCODE -ne 0) {
+            throw 'Failed to build PSKoans before running tests.'
+        }
+        Set-BuildEnvironment -Force
+    }
+    $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
+    $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
+    $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
+    $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
+    $env:PSModulePath = $outputModDir + [IO.Path]::PathSeparator + $env:PSModulePath
+
+    # Remove all versions of the module from the session. Pester can't handle multiple versions.
+    Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
+    Import-Module -Name $outputModVerManifest -Verbose:$false -ErrorAction Stop
+}
 
 Describe Reset-PSKoan {
 
@@ -7,14 +29,23 @@ Describe Reset-PSKoan {
             Confirm = $false
         }
 
-        Mock 'Get-PSKoanLocation' {
-            Join-Path -Path $TestDrive -ChildPath 'PSKoans'
-        }
+        $koanLocation = Join-Path -Path $TestDrive -ChildPath 'PSKoans'
+        $moduleKoanPath = Join-Path -Path $TestDrive -ChildPath 'Module\Group\AboutSomething.Koans.ps1'
 
-        Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'Module' } -MockWith {
+        Mock 'Get-PSKoanLocation' -ModuleName 'PSKoans' { $koanLocation }
+
+        Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'Module' } -ModuleName 'PSKoans' -MockWith {
             [PSCustomObject]@{
                 Topic        = 'AboutSomething'
-                Path         = Join-Path -Path $TestDrive -ChildPath 'Module\Group\AboutSomething.Koans.ps1'
+                Path         = $moduleKoanPath
+                RelativePath = 'Group\AboutSomething.Koans.ps1'
+            }
+        }
+
+        Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'User' } -ModuleName 'PSKoans' -MockWith {
+            [PSCustomObject]@{
+                Topic        = 'AboutSomething'
+                Path         = $userFilePath
                 RelativePath = 'Group\AboutSomething.Koans.ps1'
             }
         }
@@ -22,9 +53,9 @@ Describe Reset-PSKoan {
         New-Item -Path (Join-Path -Path $TestDrive -ChildPath 'Module\Group') -ItemType Directory
         New-Item -Path (Join-Path -Path $TestDrive -ChildPath 'PSKoans\Group') -ItemType Directory
 
-        $userFilePath = Get-PSKoanLocation | Join-Path -ChildPath 'Group\AboutSomething.Koans.ps1'
+        $userFilePath = Join-Path -Path $koanLocation -ChildPath 'Group\AboutSomething.Koans.ps1'
 
-        Set-Content -Path (Get-PSKoan -Scope Module).Path, $userFilePath -Value @'
+        Set-Content -Path $moduleKoanPath, $userFilePath -Value @'
             using module PSKoans
             [Koan(Position = 1)]
             param ( )
@@ -56,43 +87,45 @@ Describe Reset-PSKoan {
     Context 'User file exists, It block exists' {
 
         BeforeAll {
-            Mock 'Set-Content'
-            Mock 'Copy-Item'
+            Mock 'Set-Content' -ModuleName 'PSKoans'
+            Mock 'Copy-Item' -ModuleName 'PSKoans'
         }
 
         It 'updates an existing user file when -Name is supplied' {
             Reset-PSKoan -Name 'existing content' @defaultParams
 
-            Should -Invoke 'Set-Content' -Times 1
-            Should -Invoke 'Copy-Item' -Times 0
+            Should -Invoke 'Set-Content' -Times 1 -ModuleName 'PSKoans'
+            Should -Invoke 'Copy-Item' -Times 0 -ModuleName 'PSKoans'
         }
 
         It 'updates an existing user file when -Context is supplied' {
             Reset-PSKoan -Context 'first' @defaultParams
 
-            Should -Invoke 'Set-Content' -Times 1 -Exactly
-            Should -Invoke 'Copy-Item' -Times 0
+            Should -Invoke 'Set-Content' -Times 1 -Exactly -ModuleName 'PSKoans'
+            Should -Invoke 'Copy-Item' -Times 0 -ModuleName 'PSKoans'
         }
 
         It 'updates an existing user file when -Name and -Context are supplied' {
             Reset-PSKoan -Name 'nested reset content' -Context 'first' @defaultParams
 
-            Should -Invoke 'Set-Content' -Times 1 -Exactly
-            Should -Invoke 'Copy-Item' -Times 0
+            Should -Invoke 'Set-Content' -Times 1 -Exactly -ModuleName 'PSKoans'
+            Should -Invoke 'Copy-Item' -Times 0 -ModuleName 'PSKoans'
         }
 
         It 'copies a koan file from the module when -Name and -Context are not supplied' {
             Reset-PSKoan @defaultParams
 
-            Should -Invoke 'Set-Content' -Times 0
-            Should -Invoke 'Copy-Item' -Times 1 -Exactly
+            Should -Invoke 'Set-Content' -Times 0 -ModuleName 'PSKoans'
+            Should -Invoke 'Copy-Item' -Times 1 -Exactly -ModuleName 'PSKoans'
         }
     }
 
     Context 'User file exists, It block does not exist' {
 
         It 'writes a non-terminating error when the user file does not include the specified Koan' {
-            Mock 'Get-KoanIt' -ParameterFilter { $Path -match 'PSKoans' } -Module 'PSKoans'
+            $realGetKoanIt = InModuleScope 'PSKoans' { Get-Item -Path 'Function:\Get-KoanIt' }
+            Mock 'Get-KoanIt' -ModuleName 'PSKoans' -MockWith { & $realGetKoanIt @args }
+            Mock 'Get-KoanIt' -ParameterFilter { $Path -match 'PSKoans' } -ModuleName 'PSKoans'
 
             { Reset-PSKoan -Topic AboutSomething -Name 'existing content' -ErrorAction Stop @defaultParams } |
                 Should -Throw -ErrorId 'PSKoans.UserItNotFound,Reset-PSKoan'
@@ -104,8 +137,8 @@ Describe Reset-PSKoan {
         BeforeAll {
             New-Item "$TestDrive/DoesNotExist.Koans.ps1" -ItemType File > $null
 
-            Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'User' } -Verifiable
-            Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'Module' } -Verifiable -MockWith {
+            Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'User' } -Verifiable -ModuleName 'PSKoans'
+            Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'Module' } -Verifiable -ModuleName 'PSKoans' -MockWith {
                 [PSCustomObject]@{
                     Topic        = $Topic
                     Module       = '_powershell'
@@ -116,28 +149,29 @@ Describe Reset-PSKoan {
                 }
             }
 
-            Mock 'Update-PSKoan'
+            Mock 'Update-PSKoan' -ModuleName 'PSKoans'
         }
 
         It 'calls Update-PSKoan when the topic does not exist in the user location' {
             Reset-PSKoan -Topic DoesNotExist -ErrorAction Stop @defaultParams
 
             Should -InvokeVerifiable
-            Should -Invoke Update-PSKoan -Times 1 -Exactly
+            Should -Invoke Update-PSKoan -Times 1 -Exactly -ModuleName 'PSKoans'
         }
     }
 
     Context 'Module file does not exist' {
 
         BeforeAll {
-            Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'Module' }
+            Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'Module' } -ModuleName 'PSKoans'
+            Mock 'Get-PSKoan' -ParameterFilter { $Scope -eq 'User' } -ModuleName 'PSKoans'
         }
 
         It 'throws a terminating error when no topics are found in the module' {
             { Reset-PSKoan -Topic DoesNotExist @defaultParams } |
                 Should -Throw -ErrorId 'PSKoans.ModuleTopicNotFound,Reset-PSKoan'
 
-            Should -Invoke 'Get-PSKoan' -Times 1 -Exactly
+            Should -Invoke 'Get-PSKoan' -Times 1 -Exactly -ParameterFilter { $Scope -eq 'Module' } -ModuleName 'PSKoans'
         }
     }
 

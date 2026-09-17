@@ -1,4 +1,45 @@
 ﻿function Get-Karma {
+    <#
+    .SYNOPSIS
+        Retrieves information about your progress in PSKoans.
+
+    .DESCRIPTION
+        Get-Karma executes Pester against the koans and outputs a short report on your current progress.
+
+    .PARAMETER IncludeModule
+        Get Karma for the default PowerShell Koans as well as Koans for the specified module.
+        Wildcards are supported.
+
+    .PARAMETER List
+        Output a complete list of available koan topics.
+
+    .PARAMETER Module
+        Get Karma for the specified module only.
+        Wildcards are supported.
+
+    .PARAMETER Topic
+        Execute koans only from the selected Topic(s).
+        Wildcard patterns are permitted.
+
+    .EXAMPLE
+        Get-Karma
+
+        Outputs a hashtable containing information about your progress.
+
+    .EXAMPLE
+        Get-Karma -List
+
+        Outputs a list of koan topics, including both the user file location and the module file location.
+
+    .NOTES
+        Author: Joel Sallow (@vexx32)
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/Get-Karma.md
+
+    .LINK
+        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+    #>
     [CmdletBinding(DefaultParameterSetName = 'Default',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Get-Karma.md')]
     [OutputType('PSKoans.Result', 'PSKoans.CompleteResult')]
@@ -109,7 +150,7 @@
 
                 # Execute in a fresh scope to prevent internal secrets being leaked
                 $PesterTests = Invoke-Koan @{
-                    Script   = $KoanFile.Path
+                    Path     = $KoanFile.Path
                     PassThru = $true
                     Output   = 'None'
                 }

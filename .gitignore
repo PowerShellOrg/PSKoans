@@ -5,3 +5,7 @@
 PSKoans.psproj
 
 PSKoans/*/PSKoans-help.xml
+
+Output/**
+Tests/out/**
+testResults.xml
