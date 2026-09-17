@@ -93,11 +93,13 @@ Describe 'Comparison Operators' {
     Context '-gt and -lt' {
 
         It 'will compare values' {
+            $Big   = __
+            $Small = __
             11 -gt 6 | Should -BeTrue
-            __ -gt 14 | Should -BeTrue
+            $Big -gt 14 | Should -BeTrue
 
             10 -lt 20 | Should -BeTrue
-            __ -lt 0 | Should -BeTrue
+            $Small -lt 0 | Should -BeTrue
         }
 
         It 'will often return more than one item from arrays' {
@@ -190,7 +192,7 @@ Describe 'Logical Operators' {
 
         It 'returns $true only if both inputs are $true' {
             $true -and $true | Should -BeTrue
-            $____ -and $true | Should -BeFalse
+            $____ | Should -Be ($false -and $true)
         }
 
         It 'may coerce values to boolean' {
@@ -212,9 +214,9 @@ Describe 'Logical Operators' {
         It 'may coerce values to boolean' {
             # Remember, empty strings convert to boolean as $false.
             $String = ''
-            $Number = __
+            $Number = 1
 
-            $String -or $Number | Should -BeTrue
+            $____ | Should -Be ($String -or $Number)
         }
     }
 
