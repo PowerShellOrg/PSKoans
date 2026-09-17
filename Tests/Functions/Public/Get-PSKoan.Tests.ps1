@@ -1,16 +1,31 @@
-#Requires -Modules PSKoans
+#Requires -Module @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
+
+BeforeDiscovery {
+    if ($null -eq $env:BHProjectName) {
+        .\build.ps1 -Task Build
+    }
+    $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
+    $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
+    $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
+    $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
+    $env:PSModulePath = $outputModDir + [IO.Path]::PathSeparator + $env:PSModulePath
+
+    # Remove all versions of the module from the session. Pester can't handle multiple versions.
+    Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
+    Import-Module -Name $outputModVerManifest -Verbose:$false -ErrorAction Stop
+}
 
 Describe 'Get-PSKoan' {
 
     BeforeAll {
-        Mock 'Get-PSKoanLocation' {
-            Join-Path $TestDrive 'PSKoans'
-        }
+        $koanLocation = Join-Path $TestDrive 'PSKoans'
+        Mock 'Get-PSKoanLocation' -ModuleName 'PSKoans' { $koanLocation }
 
         Update-PSKoan -Confirm:$false
 
         # Stage test module
-        $path = Join-Path -Path (Get-PSKoanLocation) 'Modules\TestModule'
+        $path = Join-Path -Path $koanLocation 'Modules\TestModule'
         New-Item -Path $path -ItemType Directory -Force
         Set-Content -Path (Join-Path -Path $path -ChildPath 'AboutSomething.Koans.ps1') -Value @'
             using module PSKoans
@@ -26,7 +41,7 @@ Describe 'Get-PSKoan' {
     }
 
     It 'retrieves all except module-specific koan files' {
-        $Files = Get-ChildItem -Path (Get-PSKoanLocation) -Filter *.Koans.ps1 -Recurse -File |
+        $Files = Get-ChildItem -Path $koanLocation -Filter *.Koans.ps1 -Recurse -File |
             Where-Object FullName -NotMatch 'PSKoans[\\/]Modules[\\/]'
 
         (Get-PSKoan).Topic.Count | Should -Be $Files.Count
@@ -49,7 +64,7 @@ Describe 'Get-PSKoan' {
     }
 
     It 'should throw a terminating error if a file is blocked' -Skip:($PSVersionTable.PSEdition -ne 'Desktop' -or $PSVersionTable.Platform -ne 'Win32NT') {
-        $testFile = Get-ChildItem -Path (Get-PSKoanLocation) -Filter AboutArrays.Koans.ps1 -Recurse -File |
+        $testFile = Get-ChildItem -Path $koanLocation -Filter AboutArrays.Koans.ps1 -Recurse -File |
             Select-Object -First 1
 
         Set-Content -Path $testFile.FullName -Stream Zone.Identifier -Value @'

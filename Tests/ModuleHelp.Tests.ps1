@@ -1,20 +1,27 @@
-#region Discovery
+#Requires -Module @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
+
+BeforeDiscovery {
+    if ($null -eq $env:BHProjectName) {
+        .\build.ps1 -Task Build
+    }
+    $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
+    $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
+    $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
+    $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
+    $env:PSModulePath = $outputModDir + [IO.Path]::PathSeparator + $env:PSModulePath
+
+    # Remove all versions of the module from the session. Pester can't handle multiple versions.
+    Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
+    Import-Module -Name $outputModVerManifest -Verbose:$false -ErrorAction Stop
+}
 
 $ModuleName = 'PSKoans'
-
-#endregion Discovery
-
-BeforeAll {
-    $ModuleName = 'PSKoans'
-    Import-Module $ModuleName
-}
 
 Describe "$ModuleName Sanity Tests - Help Content" -Tags 'Module' {
 
     #region Discovery
 
-    # The module will need to be imported during Discovery since we're using it to generate test cases / Context blocks
-    Import-Module $ModuleName
 
     $ShouldProcessParameters = 'WhatIf', 'Confirm'
 
@@ -72,16 +79,20 @@ Describe "$ModuleName Sanity Tests - Help Content" -Tags 'Module' {
                 @($Parameters).Count | Should -Be $Ast.Body.ParamBlock.Parameters.Count -Because 'the number of parameters in the help should match the number in the function script'
             }
 
-            It "has a description for $Command parameter -<Name>" -TestCases $Parameters -Skip:(-not $Parameters) {
-                $Description | Should -Not -BeNullOrEmpty -Because "parameter $Name should have a description"
+            if ($Parameters) {
+                It "has a description for $Command parameter -<Name>" -TestCases $Parameters {
+                    $Description | Should -Not -BeNullOrEmpty -Because "parameter $Name should have a description"
+                }
             }
 
             It "has at least one usage example for $Command" -TestCases $Help {
                 $Help.Examples.Example.Code.Count | Should -BeGreaterOrEqual 1
             }
 
-            It "lists a description for $Command example: <Title>" -TestCases $Examples {
-                $Example.Remarks | Should -Not -BeNullOrEmpty -Because "example $($Example.Title) should have a description!"
+            if ($Examples) {
+                It "lists a description for $Command example: <Title>" -TestCases $Examples {
+                    $Example.Remarks | Should -Not -BeNullOrEmpty -Because "example $($Example.Title) should have a description!"
+                }
             }
         }
     }

@@ -1,4 +1,20 @@
-#Requires -Modules PSKoans
+#Requires -Module @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
+
+BeforeDiscovery {
+    if ($null -eq $env:BHProjectName) {
+        .\build.ps1 -Task Build
+    }
+    $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
+    $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
+    $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
+    $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
+    $env:PSModulePath = $outputModDir + [IO.Path]::PathSeparator + $env:PSModulePath
+
+    # Remove all versions of the module from the session. Pester can't handle multiple versions.
+    Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
+    Import-Module -Name $outputModVerManifest -Verbose:$false -ErrorAction Stop
+}
 
 Describe 'Move-PSKoanLibrary' {
 
@@ -9,9 +25,9 @@ Describe 'Move-PSKoanLibrary' {
                 Select-Object -ExpandProperty FullName
             $TestPath = New-Item -ItemType Directory -Path 'TestDrive:/TestPath' | Join-Path -ChildPath 'Koans'
 
-            Mock 'Get-PSKoanLocation' { $OriginalPath }
-            Mock 'Set-PSKoanLocation' -ParameterFilter { $Path -eq $TestPath }
-            Mock 'Move-Item' -ParameterFilter { $Path -eq $OriginalPath } -MockWith { $Destination }
+            Mock 'Get-PSKoanLocation' { $OriginalPath } -ModuleName 'PSKoans'
+            Mock 'Set-PSKoanLocation' -ParameterFilter { $Path -eq $TestPath } -ModuleName 'PSKoans'
+            Mock 'Move-Item' -ParameterFilter { $Path -eq $OriginalPath } -MockWith { $Destination } -ModuleName 'PSKoans'
         }
 
         It 'should output the new location' {
@@ -19,15 +35,15 @@ Describe 'Move-PSKoanLibrary' {
         }
 
         It 'should call Get-PSKoanLocation' {
-            Should -Invoke 'Get-PSKoanLocation' -Scope Context
+            Should -Invoke 'Get-PSKoanLocation' -Scope Context -ModuleName 'PSKoans'
         }
 
         It 'should call Move-Item' {
-            Should -Invoke 'Move-Item' -Scope Context
+            Should -Invoke 'Move-Item' -Scope Context -ModuleName 'PSKoans'
         }
 
         It 'should call Set-PSKoanLocation' {
-            Should -Invoke 'Set-PSKoanLocation' -Scope Context
+            Should -Invoke 'Set-PSKoanLocation' -Scope Context -ModuleName 'PSKoans'
         }
     }
 

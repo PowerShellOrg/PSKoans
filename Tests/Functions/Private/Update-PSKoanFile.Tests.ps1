@@ -1,24 +1,41 @@
-#Requires -Modules PSKoans
+#Requires -Module @{ ModuleName = 'Pester'; ModuleVersion = '5.0.0' }
+
+BeforeDiscovery {
+    if ($null -eq $env:BHProjectName) {
+        .\build.ps1 -Task Build
+    }
+    $manifest = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
+    $outputDir = Join-Path -Path $env:BHProjectPath -ChildPath 'Output'
+    $outputModDir = Join-Path -Path $outputDir -ChildPath $env:BHProjectName
+    $outputModVerDir = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $outputModVerManifest = Join-Path -Path $outputModVerDir -ChildPath "$($env:BHProjectName).psd1"
+    $env:PSModulePath = $outputModDir + [IO.Path]::PathSeparator + $env:PSModulePath
+
+    # Remove all versions of the module from the session. Pester can't handle multiple versions.
+    Get-Module $env:BHProjectName | Remove-Module -Force -ErrorAction Ignore
+    Import-Module -Name $outputModVerManifest -Verbose:$false -ErrorAction Stop
+}
 
 Describe 'Update-PSKoanFile' {
 
     BeforeAll {
-        Mock 'Get-PSKoanLocation' {
-            Join-Path -Path $TestDrive -ChildPath 'Koans'
-        }
+        $koanLocation = Join-Path -Path $TestDrive -ChildPath 'Koans'
+        $koanRelativePath = 'Group/AboutSomething.ps1'
+        $moduleKoanPath = Join-Path -Path $TestDrive -ChildPath 'Module/Group/AboutSomething.ps1'
 
-        Mock 'Get-PSKoan' {
+        Mock 'Get-PSKoanLocation' -ModuleName 'PSKoans' { $koanLocation }
+        Mock 'Get-PSKoan' -ModuleName 'PSKoans' {
             [PSCustomObject]@{
                 Topic        = 'AboutSomething'
-                Path         = Join-Path -Path $TestDrive -ChildPath 'Module/Group/AboutSomething.ps1'
-                RelativePath = 'Group/AboutSomething.ps1'
+                Path         = $moduleKoanPath
+                RelativePath = $koanRelativePath
             }
         }
 
         New-Item -Path (Join-Path -Path $TestDrive -ChildPath 'Koans/Group') -ItemType Directory
         New-Item -Path (Join-Path -Path $TestDrive -ChildPath 'Module/Group') -ItemType Directory
 
-        Set-Content -Path (Get-PSKoan).Path -Value @'
+        Set-Content -Path $moduleKoanPath -Value @'
             Describe 'AboutSomething' {
                 It 'koan 1' {
                     __ | Should -Be 1
@@ -42,7 +59,7 @@ Describe 'Update-PSKoanFile' {
             }
 '@
 
-        $userFilePath = Join-Path -Path (Get-PSKoanLocation) -ChildPath (Get-PSKoan).RelativePath
+        $userFilePath = Join-Path -Path $koanLocation -ChildPath $koanRelativePath
     }
 
     BeforeEach {
