@@ -30,15 +30,15 @@ Describe 'Invoke-Koan' {
         }
 
         It 'runs the test successfully' {
-            Invoke-Koan  -ParameterSplat @{ Script = $script:controlTest } | Should -Not -Throw
+            { Invoke-Koan -ParameterSplat @{ Path = $script:controlTest } } | Should -Not -Throw
         }
 
         It 'produces output with -PassThru' {
-            Invoke-Koan -ParameterSplat @{ Script = $script:controlTest; PassThru = $true } | Should -Not -BeNullOrEmpty
+            Invoke-Koan -ParameterSplat @{ Path = $script:controlTest; PassThru = $true } | Should -Not -BeNullOrEmpty
         }
 
         It 'correctly reports test results' {
-            $Results = Invoke-Koan -ParameterSplat @{ Script = $script:controlTest; PassThru = $true }
+            $Results = Invoke-Koan -ParameterSplat @{ Path = $script:controlTest; PassThru = $true }
 
             $Results.TotalCount | Should -Be 2
             $Results.PassedCount | Should -Be 0
@@ -46,7 +46,7 @@ Describe 'Invoke-Koan' {
         }
 
         It 'reports only expected exception types' {
-            $Results = Invoke-Koan -ParameterSplat @{ Script = $script:controlTest; PassThru = $true }
+            $Results = Invoke-Koan -ParameterSplat @{ Path = $script:controlTest; PassThru = $true }
 
             $Results.Tests.ErrorRecord.Exception |
                 ForEach-Object -MemberName GetType |

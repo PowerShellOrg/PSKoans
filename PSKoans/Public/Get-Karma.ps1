@@ -150,7 +150,7 @@
 
                 # Execute in a fresh scope to prevent internal secrets being leaked
                 $PesterTests = Invoke-Koan @{
-                    Script   = $KoanFile.Path
+                    Path     = $KoanFile.Path
                     PassThru = $true
                     Output   = 'None'
                 }
