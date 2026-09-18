@@ -1,0 +1,44 @@
+name: Publish Module
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version to publish. Leave empty to use the version in the module manifest."
+        required: false
+        type: string
+      force:
+        description: "If true, bypass the PSGallery version existence check. Use when re-triggering a failed publish job (pattern: force=true, create_release=false, publish=true)."
+        required: false
+        type: boolean
+        default: false
+      dry_run:
+        description: "If true, skip actual publishing and just validate the workflow logic."
+        required: false
+        type: boolean
+        default: false
+      create_release:
+        description: "If false, skip creating the GitHub release and tag."
+        required: false
+        type: boolean
+        default: true
+      publish:
+        description: "If false, skip publishing to PowerShell Gallery."
+        required: false
+        type: boolean
+        default: true
+permissions:
+  contents: write
+jobs:
+  publish:
+    name: Publish Module
+    uses: PowerShellOrg/.github/.github/workflows/powershell-release.yml@main
+    with:
+      version: ${{ inputs.version || '' }}
+      force: ${{ inputs.force || false }}
+      dry_run: ${{ inputs.dry_run || false }}
+      create_release: ${{ github.event_name != 'workflow_dispatch' || inputs.create_release }}
+      publish: ${{ github.event_name != 'workflow_dispatch' || inputs.publish }}
+    secrets: inherit
