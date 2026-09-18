@@ -61,7 +61,8 @@
                 }
             }
 
-            $ps = [powershell]::Create($script:KoanRunspace)
+            $ps = [powershell]::Create()
+            $ps.Runspace = $script:KoanRunspace
             $ps.AddScript($Script, <# useLocalScope: #> $true) > $null
 
             $ps.AddParameter('Params', $ParameterSplat) > $null
