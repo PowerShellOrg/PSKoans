@@ -22,7 +22,8 @@ function New-KoanRunspace {
     $runspace = [runspacefactory]::CreateRunspace()
     $runspace.Open()
     $runspace.Name = 'PSKoans.KoanRunspace'
-    $ps = [powershell]::Create($runspace)
+    $ps = [powershell]::Create()
+    $ps.Runspace = $runspace
 
     try {
         $script = {

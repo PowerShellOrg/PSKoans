@@ -44,7 +44,8 @@ Describe 'New-KoanRunspace' {
 
     It 'preloads the runspace with PSKoans' {
         $runspace = InModuleScope 'PSKoans' { New-KoanRunspace }
-        $ps = [powershell]::Create($runspace)
+        $ps = [powershell]::Create()
+        $ps.Runspace = $runspace
 
         try {
             $ps.AddCommand('Get-Module').AddParameter('Name', 'PSKoans') > $null
