@@ -1,0 +1,12 @@
+# Configuration for mindsers/changelog-reader-action (see .github/workflows
+# and the org's reusable powershell-ci.yml, which sets validation_level but
+# not validation_depth).
+#
+# Releases 0.65.1-0.66.2 predate this org's Keep a Changelog / SemVer
+# patch-section convention: those patch versions genuinely shipped
+# Added/Changed content alongside fixes (verified against their git tags),
+# so recategorizing them as Fixed-only would misrepresent what shipped.
+# Scoping validation to the most recent released entries keeps the linter
+# enforcing the convention on new work without rewriting that history.
+# See #499.
+validation_depth: 2
