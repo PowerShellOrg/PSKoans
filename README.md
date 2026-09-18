@@ -1,8 +1,6 @@
 # PowerShell Koans
 
-|                                      | Build Status                                                                                    |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| [![PSKoans Logo][logo-64]][logo-svg] | [![Build Status][build-badge]][build-link]<br/>[![Coverage Status][coverage-badge]][build-link] |
+[![PSKoans Logo][logo-64]][logo-svg]
 
 ## About the Author
 
@@ -57,7 +55,7 @@ Install-Module PSKoans -Scope CurrentUser
 
 ### Or Download the Repo
 
-1. `git clone` the repository into your desired directory, or download the module zip file from the build artifacts available on [this page](https://dev.azure.com/SallowCode/PSKoans/_build/latest?definitionId=1).
+1. `git clone` the repository into your desired directory.
 2. From a normal powershell session run `Get-ChildItem -Recurse | Unblock-File` in that directory to remove the "downloaded from internet" flag that blocks them from running.
 3. Check `Get-ExecutionPolicy`: if it says 'Restricted' or 'Undefined', you need to also run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` in order to allow the scripts to run.
 4. Add the repository folder to `$env:PSModulePath` so that PowerShell can see it.
@@ -170,10 +168,7 @@ If you would like to support the project, you can:
 - [Donate with Ko-fi][ko-fi]
 
 [blog]: https://vexx32.github.io
-[build-badge]: https://dev.azure.com/SallowCode/PSKoans/_apis/build/status/PSKoans%20CI?branchName=main
-[build-link]: https://dev.azure.com/SallowCode/PSKoans/_build/latest?definitionId=1&branchName=main
 [contributing]: CONTRIBUTING.md
-[coverage-badge]: https://img.shields.io/azure-devops/coverage/SallowCode/PSKoans/1
 [define-koan]: https://en.wikipedia.org/wiki/K%C5%8Dan
 [fsharp-koans]: https://github.com/ChrisMarinos/FSharpKoans
 [github-sponsor]: https://github.com/sponsors/vexx32
