@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request: {}
+  workflow_dispatch:
+
+jobs:
+  ci:
+    uses: PowerShellOrg/.github/.github/workflows/powershell-ci.yml@main
