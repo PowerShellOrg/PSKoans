@@ -1,6 +1,11 @@
 using module PSKoans
 using namespace System.Collections.Generic
 using namespace System.Management.Automation.Language
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'String',
+    Justification = 'Get-SortedString is a solution stub the learner implements; $String is unused until solved.'
+)]
 [Koan(Position = 151)]
 param()
 
@@ -18,7 +23,7 @@ param()
 Describe 'Kata - Sorting Characters' {
 
     BeforeAll {
-        $Verification = {
+        $script:Verification = {
             $Functions = [Hashset[string]]::new([StringComparer]::OrdinalIgnoreCase)
             $Ast = (Get-Command 'Get-SortedString' -CommandType Function).ScriptBlock.Ast
             $Ast.FindAll(

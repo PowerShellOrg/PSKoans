@@ -1,4 +1,9 @@
 ﻿using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseSingularNouns',
+    '',
+    Justification = 'Add-Things/Add-Numbers are minimal in-exercise example functions; naming is incidental to the parameter-passing lesson.'
+)]
 [Koan(Position = 117)]
 param()
 <#

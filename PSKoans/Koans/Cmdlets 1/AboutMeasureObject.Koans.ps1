@@ -9,7 +9,7 @@ param()
 #>
 Describe 'Measure-Object' {
     BeforeAll {
-        $Numbers = @(
+        $script:Numbers = @(
             839, 339, 763, 663, 238, 427, 577, 613, 284, 453
             850, 130, 250, 843, 669, 972, 572, 41, 172, 155
             729, 616, 285, 231, 128, 540, 204, 584, 407, 98
@@ -17,7 +17,7 @@ Describe 'Measure-Object' {
             665, 154, 943, 35, 391, 816, 420, 229, 3, 938
         )
 
-        $Files = Get-ChildItem -Path $HOME -Recurse -Depth 2
+        $script:Files = Get-ChildItem -Path $HOME -Recurse -Depth 2
     }
 
     It 'can count objects' {

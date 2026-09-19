@@ -24,10 +24,6 @@ BeforeDiscovery {
 
 Describe 'New-KoanRunspace' {
 
-    BeforeAll {
-        [runspace]$runspace = $null
-    }
-
     AfterEach {
         $runspace.Dispose()
     }

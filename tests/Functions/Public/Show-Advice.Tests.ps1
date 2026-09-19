@@ -31,7 +31,7 @@ Describe "Show-Advice" {
     Context "Behaviour of Parameter-less Calls" {
 
         BeforeAll {
-            $result = Show-Advice
+            $script:result = Show-Advice
         }
 
         It "calls Write-ConsoleLine with Parameter -Title" {
@@ -70,9 +70,9 @@ Describe "Show-Advice" {
     Context 'Behaviour with malformed advice files' {
 
         BeforeAll {
-            $GetContentResult = [string]::Empty
+            $script:GetContentResult = [string]::Empty
 
-            Mock Get-Content -MockWith { $GetContentResult } -Verifiable -ModuleName 'PSKoans'
+            Mock Get-Content -MockWith { $script:GetContentResult } -Verifiable -ModuleName 'PSKoans'
             Mock Get-ChildItem -MockWith { [PSCustomObject]@{ PSPath = "DummyPath" } } -Verifiable -ModuleName 'PSKoans'
         }
 
@@ -94,7 +94,7 @@ Describe "Show-Advice" {
                 } | ConvertTo-Json
             }
         ) {
-            $GetContentResult = $Json
+            $script:GetContentResult = $Json
             $AdviceName = "TestAdvice"
             $Message = "Could not find Title and/or Content elements for Advice file: {0}" -f $AdviceName
             { Show-Advice -name $AdviceName -ErrorAction Stop } | Should -Throw -ExpectedMessage $Message

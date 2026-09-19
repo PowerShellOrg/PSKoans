@@ -1,6 +1,11 @@
 ﻿using module PSKoans
 using namespace System.Management.Automation.Language
 using namespace System.Collections.Generic
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'Data',
+    Justification = 'Get-GreatestVarianceDate is a solution stub the learner implements; $Data is unused until solved.'
+)]
 [Koan(Position = 150)]
 param()
 <#
@@ -28,7 +33,7 @@ param()
 Describe "The Stock Challenge" {
 
     BeforeAll {
-        $StockData = @(
+        $script:StockData = @(
             "Date,Open,High,Low,Close,Volume,Adj Close"
             "2012-03-30,32.40,32.41,32.04,32.26,31749400,32.26"
             "2012-03-29,32.06,32.19,31.81,32.12,37038500,32.12"
@@ -61,7 +66,7 @@ Describe "The Stock Challenge" {
             the finish line!
         #>
 
-        $Verification = {
+        $script:Verification = {
             $Functions = [Hashset[string]]::new([StringComparer]::OrdinalIgnoreCase)
             $Ast = (Get-Command 'Get-GreatestVarianceDate' -CommandType Function).ScriptBlock.Ast
             $Ast.FindAll(

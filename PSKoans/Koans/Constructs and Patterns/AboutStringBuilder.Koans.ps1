@@ -118,7 +118,7 @@ Describe 'System.Text.StringBuilder' {
     Context 'Other StringBuilder Methods' {
 
         BeforeAll {
-            $StringBuilder = [System.Text.StringBuilder]::new("TEXT")
+            $script:StringBuilder = [System.Text.StringBuilder]::new("TEXT")
         }
 
         It 'can be cleared' {

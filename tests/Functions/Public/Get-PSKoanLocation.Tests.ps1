@@ -31,7 +31,7 @@ Describe 'Get-PSKoanLocation' {
                 '~/PSKoans'
             }
 
-            $Result = Get-PSKoanLocation
+            $script:Result = Get-PSKoanLocation
         }
 
         It 'retrieves the koan library location' {

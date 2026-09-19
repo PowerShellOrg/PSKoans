@@ -12,6 +12,7 @@ Properties {
     $PSBPreference.Test.OutputFile = 'out/testResults.xml'
     $PSBPreference.Test.OutputFormat = 'JUnitXml'
     $PSBPreference.Test.ScriptAnalysis.Enabled = $true
+    $PSBPreference.Test.ScriptAnalysis.SettingsPath = Join-Path $PSScriptRoot 'PSScriptAnalyzerSettings.psd1'
     $PSBPreference.Test.ScriptAnalysis.FailBuildOnSeverityLevel = 'Error'
     $PSBPreference.Test.CodeCoverage.Enabled = $false
 
@@ -24,6 +25,20 @@ Properties {
 Task GenerateFormatData -Depends Clean {
     & (Join-Path $PSBPreference.General.ProjectRoot 'PSKoans.ezformat.ps1')
 } -Description 'Generates PSKoans.format.ps1xml from ./formatting'
+
+# Koan files start with `using module PSKoans`. PSScriptAnalyzer can only resolve that if the
+# staged module is discoverable on PSModulePath -- without it, every koan file surfaces a
+# `ModuleNotFoundDuringParse` ParseError, and (more importantly) PSScriptAnalyzer skips every
+# other rule that depends on symbol resolution (aliases, output types, etc.) for that file.
+Task PrepareAnalysis -Depends Build {
+    $moduleParentDir = Split-Path -Path $PSBPreference.Build.ModuleOutDir -Parent
+    $currentEntries = $env:PSModulePath -split [IO.Path]::PathSeparator
+    if ($moduleParentDir -notin $currentEntries) {
+        $env:PSModulePath = $moduleParentDir + [IO.Path]::PathSeparator + $env:PSModulePath
+    }
+} -Description 'Makes the staged PSKoans module resolvable so koan files'' `using module` statements parse cleanly'
+
+$PSBAnalyzeDependency = @('PrepareAnalysis')
 
 $PSBStageFilesDependency = @('Clean', 'GenerateFormatData')
 $PSBBuildDependency = @('StageFiles')

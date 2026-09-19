@@ -15,8 +15,8 @@ param()
 #>
 Describe 'Sort-Object' {
     BeforeAll {
-        $Numbers = 5, 2, 7, 1, 4, 6, 8, 3, 10, 9
-        $Strings = 'hello', 'goodbye', 'who', 'Steve', 'PowerShell'
+        $script:Numbers = 5, 2, 7, 1, 4, 6, 8, 3, 10, 9
+        $script:Strings = 'hello', 'goodbye', 'who', 'Steve', 'PowerShell'
     }
 
     It 'sorts a collection of objects' {

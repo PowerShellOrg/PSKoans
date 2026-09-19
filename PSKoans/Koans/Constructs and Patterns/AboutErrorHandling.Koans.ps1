@@ -48,7 +48,7 @@ Describe 'ErrorRecord' {
     }
     Context 'Error Assignments' {
         BeforeAll {
-            $ErrorRecord = try {
+            $script:ErrorRecord = try {
                 throw "A challenge to the sky!"
             }
             catch {

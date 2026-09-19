@@ -1,5 +1,12 @@
-try {
-    Add-AssertionOperator -Name Fail -Test {
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'ActualValue',
+    Justification = 'Pester always passes the tested value as the first positional argument to a -Test scriptblock; this assertion ignores it because it always fails.'
+)]
+param()
+
+if ('Fail' -notin (Get-ShouldOperator).Name) {
+    Add-ShouldOperator -Name Fail -Test {
         param ($ActualValue, [switch] $Negate, [string] $Because)
 
         if ($Negate) {
@@ -23,4 +30,3 @@ try {
         }
     }
 }
-catch { }

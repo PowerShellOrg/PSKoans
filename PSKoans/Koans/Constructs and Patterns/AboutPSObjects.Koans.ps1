@@ -19,7 +19,7 @@ param()
 
 Describe 'PSObject' {
     BeforeAll {
-        $Object = @('Stand for nothing; fall for everything.')
+        $script:Object = @('Stand for nothing; fall for everything.')
     }
 
     It "is accessed via a hidden .PSObject property" {

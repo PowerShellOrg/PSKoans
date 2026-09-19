@@ -94,7 +94,7 @@ Describe 'Update-PSKoan' {
             New-Item -Path $koanLocation -ItemType Directory
             Update-PSKoan -Confirm:$false
 
-            $file = Get-ChildItem -Path $koanLocation -Filter *.koans.ps1 -File -Recurse |
+            $script:file = Get-ChildItem -Path $koanLocation -Filter *.koans.ps1 -File -Recurse |
                 Select-Object -First 1
         }
 
