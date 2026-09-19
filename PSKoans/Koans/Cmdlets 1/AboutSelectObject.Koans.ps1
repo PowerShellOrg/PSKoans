@@ -68,7 +68,7 @@ Describe 'Select-Object' {
 
         $PropertyToExpand = '____'
 
-        $Value = Get-Item -Path $PSHome | Select-Object -ExpandProperty $PropertyToExpand
+        $Value = Get-Item -Path $PSHome | Select-Object -ExpandProperty $PropertyToExpand -ErrorAction SilentlyContinue
 
         $Value | Should -Be 'Directory'
     }
