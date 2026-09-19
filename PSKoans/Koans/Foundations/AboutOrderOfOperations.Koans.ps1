@@ -1,4 +1,14 @@
 ﻿using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseSingularNouns',
+    '',
+    Justification = 'Add-Numbers is a minimal in-exercise example function; naming is incidental to the order-of-operations lesson.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSAvoidUsingPositionalParameters',
+    '',
+    Justification = 'Positional argument passing is the exact subject of this lesson, and the __ blank is invoked as a bare positional command by design.'
+)]
 [Koan(Position = 118)]
 param()
 <#

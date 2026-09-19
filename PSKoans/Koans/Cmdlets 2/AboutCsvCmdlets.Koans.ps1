@@ -34,7 +34,7 @@ Describe 'CSV Cmdlets' {
             to match.
         #>
         BeforeAll {
-            $Objects = foreach ($number in 1..5) {
+            $script:Objects = foreach ($number in 1..5) {
                 [PSCustomObject]@{
                     Number = $number
                     Square = $number * $number
@@ -105,14 +105,14 @@ Describe 'CSV Cmdlets' {
             All data will be imported as an array of PSCustomObjects with string properties.
         #>
         BeforeAll {
-            $Objects = foreach ($number in 1..5) {
+            $script:Objects = foreach ($number in 1..5) {
                 [bigint]$number
             }
 
             $CsvPath = "$TestDrive/Data.csv"
 
             $Objects | Export-Csv -Path $CsvPath -NoTypeInformation
-            $ImportedData = Import-Csv -Path $CsvPath
+            $script:ImportedData = Import-Csv -Path $CsvPath
         }
 
         It 'imports the stored data as PSCustomObjects' {
@@ -196,7 +196,7 @@ Describe 'CSV Cmdlets' {
             it will output the lines of the CSV as strings instead of storing the data to a file.
         #>
         BeforeAll {
-            $Objects = foreach ($number in 1..5) {
+            $script:Objects = foreach ($number in 1..5) {
                 [PSCustomObject]@{
                     Number = $number
                     Square = $number * $number
@@ -224,7 +224,7 @@ Describe 'CSV Cmdlets' {
     Context 'ConvertFrom-Csv' {
 
         BeforeAll {
-            $CsvString = @"
+            $script:CsvString = @"
 "Number","Square"
 "1","1"
 "2","4"
@@ -235,7 +235,6 @@ Describe 'CSV Cmdlets' {
         }
 
         It 'operates on string data rather than directly with files' {
-            $Objects = $CsvString | ConvertFrom-Csv
             $CsvString -is [____] | Should -BeTrue
         }
 

@@ -25,7 +25,7 @@ BeforeDiscovery {
 Describe 'Get-Karma' {
 
     BeforeAll {
-        $originalLocation = Get-PSKoanLocation
+        $script:originalLocation = Get-PSKoanLocation
         Set-PSKoanLocation -Path (Join-Path $TestDrive -ChildPath 'PSKoans')
         Update-PSKoan -Confirm:$false
     }
@@ -46,7 +46,7 @@ Describe 'Get-Karma' {
                 }
             }
 
-            $Result = Get-Karma
+            $script:Result = Get-Karma
         }
 
         It 'produces a hashtable with data' {
@@ -151,7 +151,7 @@ Describe 'Get-Karma' {
 '@
 
             try {
-                $Result = Get-Karma -Topic SelectedTopicTest
+                $script:Result = Get-Karma -Topic SelectedTopicTest
             }
             catch {
                 # Ignore this. Error tests follow.

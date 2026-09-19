@@ -1,4 +1,9 @@
 ﻿using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseShouldProcessForStateChangingFunctions',
+    '',
+    Justification = 'Set-Number is a minimal in-exercise example returning a computed value; it has no real side effects to guard with ShouldProcess.'
+)]
 [Koan(Position = 116)]
 param()
 <#

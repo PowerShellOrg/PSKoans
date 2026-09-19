@@ -1,3 +1,30 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'Command',
+    Justification = 'false positive'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'Parameter',
+    Justification = 'false positive'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'CommandAst',
+    Justification = 'false positive'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'FakeBoundParams',
+    Justification = 'false positive'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'WordToComplete',
+    Justification = 'used only inside a nested .Where{} scriptblock, which PSScriptAnalyzer does not trace back to the enclosing param'
+)]
+param()
+
 $CommandName = @(
     'Get-Karma'
     'Get-PSKoan'

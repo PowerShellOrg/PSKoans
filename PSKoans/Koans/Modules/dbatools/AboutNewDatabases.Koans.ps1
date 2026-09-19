@@ -14,7 +14,7 @@ Describe 'New-DbaDatabase' {
     #region Mocks
     <#
         Let's set up the environment for you.
-        
+
         Unless you want the Koans to nearly always fail, I would suggest not messing with this bit.
     #>
     BeforeAll {
@@ -137,7 +137,7 @@ Describe 'New-DbaDatabase' {
             $_.SqlInstance -eq 'localhost' -and
             $_.RecoveryModel -eq 'Full'
         }
-    }   
+    }
     #endregion
 
     It 'creates a new database on the specified instance' {

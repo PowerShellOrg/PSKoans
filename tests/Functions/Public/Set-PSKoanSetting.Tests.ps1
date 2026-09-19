@@ -120,7 +120,7 @@ Describe 'Set-PSKoanSetting' {
         Describe 'Setting values with -Name and -Value' {
 
             BeforeAll {
-                $NewConfigPath = InModuleScope 'PSKoans' {
+                $script:NewConfigPath = InModuleScope 'PSKoans' {
                     ($script:ConfigPath = "$TestDrive/config.json")
                 }
 
@@ -155,7 +155,7 @@ Describe 'Set-PSKoanSetting' {
         Context 'Setting values with -Settings Hashtable' {
 
             BeforeAll {
-                $NewConfigPath = InModuleScope 'PSKoans' {
+                $script:NewConfigPath = InModuleScope 'PSKoans' {
                     ($script:ConfigPath = "$TestDrive/config.json")
                 }
 

@@ -28,7 +28,7 @@ Describe 'Show-Karma' {
         $koanLocation = "$TestDrive/Koans"
         Mock 'Get-PSKoanLocation' -ModuleName 'PSKoans' { $koanLocation }
 
-        $EditorSetting = Get-PSKoanSetting -Name Editor
+        $script:EditorSetting = Get-PSKoanSetting -Name Editor
 
         Reset-PSKoan -Confirm:$false
     }

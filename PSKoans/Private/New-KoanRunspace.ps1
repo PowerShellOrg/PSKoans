@@ -16,7 +16,13 @@ function New-KoanRunspace {
     .NOTES
     Run scripts in a new scope to avoid scope bleed wherever possible, with the `$ps.AddScript($script, $true) overload.
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSUseShouldProcessForStateChangingFunctions',
+        '',
+        Justification = 'Constructs and returns an in-memory Runspace object; no external state is mutated.'
+    )]
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.Runspaces.Runspace])]
     param()
 
     $runspace = [runspacefactory]::CreateRunspace()

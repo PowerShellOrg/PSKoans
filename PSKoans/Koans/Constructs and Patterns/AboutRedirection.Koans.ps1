@@ -36,9 +36,9 @@ param()
 #>
 Describe 'Redirection Operators' {
     BeforeAll {
-        $OriginalDebugPreference = $DebugPreference
-        $OriginalVerbosePreference = $VerbosePreference
-        $FilePath = 'TestDrive:\TestFile.txt'
+        $script:OriginalDebugPreference = $DebugPreference
+        $script:OriginalVerbosePreference = $VerbosePreference
+        $script:FilePath = 'TestDrive:\TestFile.txt'
 
         $DebugPreference = $VerbosePreference = 'Continue'
     }

@@ -25,7 +25,7 @@ BeforeDiscovery {
 Describe 'Get-KoanIt' {
 
     BeforeAll {
-        $defaultParams = @{
+        $script:defaultParams = @{
             Path = Join-Path $TestDrive 'AboutSomething.Koans.ps1'
         }
     }

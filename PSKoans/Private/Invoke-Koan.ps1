@@ -18,7 +18,7 @@
     #>
 
     [CmdletBinding()]
-    [OutputType([PSObject])]
+    [OutputType([System.Management.Automation.PSDataCollection[psobject]])]
     param(
         [Parameter(Position = 0, Mandatory)]
         [Alias('Params')]

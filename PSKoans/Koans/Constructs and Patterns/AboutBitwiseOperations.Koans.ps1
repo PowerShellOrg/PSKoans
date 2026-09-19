@@ -37,6 +37,7 @@ Describe 'Binary Operators' {
         #>
         function ConvertFrom-Binary {
             [CmdletBinding()]
+            [OutputType([string], [byte], [sbyte], [int16], [int32], [int64])]
             param (
                 # The binary string to convert.
                 [Parameter(Mandatory, Position = 0, ValueFromPipeline)]

@@ -1,4 +1,9 @@
 ﻿using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseLiteralInitializerForHashtable',
+    '',
+    Justification = 'Creating a Hashtable via New-Object (vs. the @{} literal) is the exact thing this koan demonstrates.'
+)]
 [Koan(Position = 203)]
 param()
 <#

@@ -57,7 +57,7 @@ Describe 'Static Analysis: Module & Repository Files' {
 
         BeforeAll {
             $ModuleName = 'PSKoans'
-            $ModuleRoot = (Get-Module -Name $ModuleName).ModuleBase
+            $script:ModuleRoot = (Get-Module -Name $ModuleName).ModuleBase
         }
 
         It 'cleanly imports the module' {
