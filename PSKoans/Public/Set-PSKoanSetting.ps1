@@ -49,7 +49,7 @@ function Set-PSKoanSetting {
         'Reset',
         Justification = 'Used only to select the Reset parameter set; dispatch reads $PSCmdlet.ParameterSetName, not the switch value.'
     )]
-    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Single',
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Multiple',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanSetting.md')]
     [OutputType([void])]
     param(

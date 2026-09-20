@@ -74,6 +74,20 @@ Describe 'Set-PSKoanSetting' {
                     Select-Object -ExpandProperty $Name |
                     Should -BeExactly $Value
             }
+
+            It 'should add a new setting via pipeline (PSCustomObject with Name/Value): <Name> = <Value>' -TestCases @(
+                @{ Name = 'TestSetting1'; Value = 'TestValue1' }
+                @{ Name = 'LibraryFolder'; Value = "TestDrive:/PSKoans" }
+                @{ Name = 'Editor'; Value = 'code-insiders' }
+            ) {
+                [PSCustomObject]@{ Name = $Name; Value = $Value } | Set-PSKoanSetting
+
+                Get-PSKoanSetting -Name $Name | Should -BeExactly $Value
+                Get-Content -Path $NewConfigPath |
+                    ConvertFrom-Json |
+                    Select-Object -ExpandProperty $Name |
+                    Should -BeExactly $Value
+            }
         }
 
         Context 'Setting values with -Settings Hashtable' {
@@ -106,6 +120,20 @@ Describe 'Set-PSKoanSetting' {
                 }
 
                 Set-PSKoanSetting -Settings $NewSettings
+                $Settings = Get-PSKoanSetting
+
+                $Settings.TestSetting2 | Should -BeExactly $NewSettings.TestSetting2
+                $Settings.Editor | Should -BeExactly 'code'
+                $Settings.LibraryFolder | Should -BeExactly $NewSettings.LibraryFolder
+            }
+
+            It 'should add or overwrite multiple new settings via pipeline (hashtable)' {
+                $NewSettings = @{
+                    TestSetting2  = "TestValue2"
+                    LibraryFolder = "$TestDrive/PSKoans"
+                }
+
+                $NewSettings | Set-PSKoanSetting
                 $Settings = Get-PSKoanSetting
 
                 $Settings.TestSetting2 | Should -BeExactly $NewSettings.TestSetting2
