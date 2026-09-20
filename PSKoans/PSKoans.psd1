@@ -55,7 +55,7 @@
         @{
             ModuleName      = 'Pester'
             ModuleVersion   = '5.0.2'
-            MaximumVersion  = '5.1.1'
+            MaximumVersion  = '5.999.999'
         }
     )
 
