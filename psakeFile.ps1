@@ -43,6 +43,21 @@ $PSBAnalyzeDependency = @('PrepareAnalysis')
 $PSBStageFilesDependency = @('Clean', 'GenerateFormatData')
 $PSBBuildDependency = @('StageFiles')
 
+# PowerShellBuild's Test-PSBuildScriptAnalysis compares `$_Severity` -- an undefined variable --
+# instead of `$_.Severity` when counting findings by severity, in every published release through
+# 0.8.2. The count is always zero, so the `Analyze` task's -SeverityThreshold gate never throws no
+# matter how many findings exist; it only ever prints them. (Fixed on the psake/PowerShellBuild
+# `main` branch, but unreleased as of 0.8.2.) Declaring this task as a shared-task reference lets us
+# attach a PostAction, which psake runs after the (broken) Action in the same task invocation --
+# re-running the analysis and enforcing a real gate. Remove this once a fixed release ships.
+Task Analyze -FromModule PowerShellBuild -MinimumVersion '0.7.3' -PostAction {
+    $gateResult = Invoke-ScriptAnalyzer -Path $PSBPreference.Build.ModuleOutDir -Settings $PSBPreference.Test.ScriptAnalysis.SettingsPath -Recurse
+    $findingCount = @($gateResult).Count
+    if ($findingCount -gt 0) {
+        throw "PSScriptAnalyzer found $findingCount finding(s); see the report above."
+    }
+}
+
 Task Default -Depends Test
 
 # PowerShellBuild adds the following tasks:
