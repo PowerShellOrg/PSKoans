@@ -1,22 +1,22 @@
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
     'PSReviewUnusedParameter',
     'Command',
-    Justification = 'false positive'
+    Justification = 'Required positional slot in the host-supplied Register-ArgumentCompleter callback signature; this completer does not use its value.'
 )]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
     'PSReviewUnusedParameter',
     'Parameter',
-    Justification = 'false positive'
+    Justification = 'Required positional slot in the host-supplied Register-ArgumentCompleter callback signature; this completer does not use its value.'
 )]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
     'PSReviewUnusedParameter',
     'CommandAst',
-    Justification = 'false positive'
+    Justification = 'Required positional slot in the host-supplied Register-ArgumentCompleter callback signature; this completer does not use its value.'
 )]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
     'PSReviewUnusedParameter',
     'FakeBoundParams',
-    Justification = 'false positive'
+    Justification = 'Required positional slot in the host-supplied Register-ArgumentCompleter callback signature; this completer does not use its value.'
 )]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
     'PSReviewUnusedParameter',
