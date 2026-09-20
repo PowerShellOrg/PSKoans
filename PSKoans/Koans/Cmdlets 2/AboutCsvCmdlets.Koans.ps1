@@ -235,6 +235,7 @@ Describe 'CSV Cmdlets' {
         }
 
         It 'operates on string data rather than directly with files' {
+            $null = $CsvString | ConvertFrom-Csv
             $CsvString -is [____] | Should -BeTrue
         }
 
