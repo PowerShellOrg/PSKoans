@@ -65,6 +65,16 @@ function Get-PSKoan {
     .LINK
         https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSReviewUnusedParameter',
+        'SkipAttributeParsing',
+        Justification = 'Referenced inside a nested ForEach-Object scriptblock, which PSScriptAnalyzer does not always trace back to the enclosing param.'
+    )]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSReviewUnusedParameter',
+        'ListModules',
+        Justification = 'Used only to select the ListModules parameter set; dispatch reads $PSCmdlet.ParameterSetName, not the switch value.'
+    )]
     [CmdletBinding(DefaultParameterSetName = 'IncludeModule',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md')]
     [OutputType('PSKoans.KoanInfo')]

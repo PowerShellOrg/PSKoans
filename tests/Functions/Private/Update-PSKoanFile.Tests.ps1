@@ -65,7 +65,7 @@ Describe 'Update-PSKoanFile' {
             }
 '@
 
-        $userFilePath = Join-Path -Path $koanLocation -ChildPath $koanRelativePath
+        $script:userFilePath = Join-Path -Path $koanLocation -ChildPath $koanRelativePath
     }
 
     BeforeEach {

@@ -1,4 +1,14 @@
 ﻿using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    'Number',
+    Justification = 'Demonstrates that "$Number:text" does not expand $Number (colon starts a drive/scope qualifier); intentionally unused by the koan.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    'String2',
+    Justification = 'Setup value for the blank the learner fills in below with $String2; unused until solved.'
+)]
 [Koan(Position = 104)]
 param()
 <#

@@ -1,4 +1,14 @@
 using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseShouldProcessForStateChangingFunctions',
+    '',
+    Justification = 'New-Enumeration is a minimal in-exercise example defining an enum in a nested scope; it has no real side effects to guard with ShouldProcess.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseUsingScopeModifierInNewRunspaces',
+    '',
+    Justification = '$Type is Get-Objects own function parameter declared inside the Start-Job scriptblock, not a captured outer-scope variable; $using: does not apply.'
+)]
 [Koan(Position = 310)]
 param()
 <#

@@ -1,4 +1,9 @@
 ﻿using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    '____',
+    Justification = 'The variable name IS the blank; the learner replaces it with the real constant variable name and it becomes used.'
+)]
 [Koan(Position = 111)]
 param()
 <#

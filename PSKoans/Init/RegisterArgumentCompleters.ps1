@@ -1,3 +1,30 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'Command',
+    Justification = 'Required positional slot in the host-supplied Register-ArgumentCompleter callback signature; this completer does not use its value.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'Parameter',
+    Justification = 'Required positional slot in the host-supplied Register-ArgumentCompleter callback signature; this completer does not use its value.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'CommandAst',
+    Justification = 'Required positional slot in the host-supplied Register-ArgumentCompleter callback signature; this completer does not use its value.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'FakeBoundParams',
+    Justification = 'Required positional slot in the host-supplied Register-ArgumentCompleter callback signature; this completer does not use its value.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'WordToComplete',
+    Justification = 'used only inside a nested .Where{} scriptblock, which PSScriptAnalyzer does not trace back to the enclosing param'
+)]
+param()
+
 $CommandName = @(
     'Get-Karma'
     'Get-PSKoan'

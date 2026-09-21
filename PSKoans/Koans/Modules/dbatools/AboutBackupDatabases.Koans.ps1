@@ -13,7 +13,7 @@ param()
     with the Backup-DbaDatabase command.
 #>
 Describe "Backup-DbaDatabase" {
-    
+
     #region Mocks
     <#
         Let's setup the environment for you. Unless you want the Koans to nearly always fail, I would
@@ -164,7 +164,7 @@ Describe "Backup-DbaDatabase" {
     It 'takes backups and substitutes keywords such as database name and database backup type' {
         <#
             There are different conventions for specifying where the backup file will go to
-            and what the backup file will be called. There are different keywords that 
+            and what the backup file will be called. There are different keywords that
             dbatools provides that can be used with the -FilePath and -ReplaceInName.
                 instancename - will be replaced with the instance name
                 servername - will be replaced with the server name

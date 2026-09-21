@@ -39,6 +39,11 @@ function New-PSKoanErrorRecord {
         Constructs an error record out of disparate parts and throws it to terminate the current command.
     #>
 
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSUseShouldProcessForStateChangingFunctions',
+        '',
+        Justification = 'Constructs and returns an in-memory ErrorRecord object; no external state is mutated.'
+    )]
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     [OutputType([System.Management.Automation.ErrorRecord])]
     param(

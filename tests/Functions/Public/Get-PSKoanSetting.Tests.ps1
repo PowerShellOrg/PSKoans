@@ -32,7 +32,7 @@ Describe 'Get-PSKoanSetting' {
             $script:ConfigPath = $Path
         }
 
-        ${/} = [IO.Path]::DirectorySeparatorChar
+        ${script:/} = [IO.Path]::DirectorySeparatorChar
     }
 
     AfterAll {
@@ -51,7 +51,7 @@ Describe 'Get-PSKoanSetting' {
         It 'returns the default settings' {
             $Result = Get-PSKoanSetting
             $Result | Should -BeOfType [PSCustomObject]
-            $Result.KoanLocation | Should -BeExactly "$HOME${/}PSKoans"
+            $Result.KoanLocation | Should -BeExactly "$HOME${script:/}PSKoans"
             $Result.Editor | Should -BeExactly 'code'
         }
 

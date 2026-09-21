@@ -21,6 +21,11 @@
     .LINK
         https://github.com/vexx32/PSKoans
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSUseDeclaredVarsMoreThanAssignments',
+        'invokedViaInvokePester',
+        Justification = 'Read by Pester internals via $ExecutionContext.SessionState.PSVariable.Get(''invokedViaInvokePester''), a dynamic-scope convention invisible to static analysis.'
+    )]
     [CmdletBinding()]
     [OutputType([int])]
     param(

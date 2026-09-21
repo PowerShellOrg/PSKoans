@@ -1,4 +1,9 @@
 ﻿using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSProvideCommentHelp',
+    '',
+    Justification = 'Test-ModuleFunction is throwaway scaffolding dynamically written to a demo module file for this exercise; formal help is not warranted.'
+)]
 [Koan(Position = 212)]
 param()
 <#
@@ -90,7 +95,7 @@ Describe 'Find-Module' {
                 }, Description
         }
 
-        $Module = Find-Module -Name 'Pester' | Select-Object -First 1
+        $script:Module = Find-Module -Name 'Pester' | Select-Object -First 1
     }
 
     It 'finds modules that can be installed' {
@@ -119,7 +124,7 @@ Describe 'New-Module' {
         a module in-memory without needing a file on disk.
     #>
     BeforeAll {
-        $Module = New-Module -Name 'PSKoans_TestModule' -ScriptBlock {}
+        $script:Module = New-Module -Name 'PSKoans_TestModule' -ScriptBlock {}
     }
 
     It 'creates a dynamic module object' {
@@ -154,7 +159,7 @@ Describe 'Import-Module' {
     #>
     Context 'Importing Installed Modules' {
         BeforeAll {
-            $Module = New-Module -Name 'PSKoans_ImportModuleTest' { }
+            $script:Module = New-Module -Name 'PSKoans_ImportModuleTest' { }
         }
 
         It 'does not produce output' {

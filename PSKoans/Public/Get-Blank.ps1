@@ -38,6 +38,21 @@
     .LINK
         https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSReviewUnusedParameter',
+        '|PipeInput',
+        Justification = 'Exists only to silently absorb accidental pipeline input without erroring; the value is never meant to be read.'
+    )]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSReviewUnusedParameter',
+        '|ParameterInput',
+        Justification = 'Exists only to silently absorb accidental extra arguments without erroring; the value is never meant to be read.'
+    )]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSUseProcessBlockForPipelineCommand',
+        '',
+        Justification = 'Piped input is intentionally discarded, not processed per-item; a process block would add no behavior.'
+    )]
     [CmdletBinding(HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Get-Blank.md')]
     [OutputType('Blank')]
     [Alias('__', '____', 'FILL_ME_IN')]

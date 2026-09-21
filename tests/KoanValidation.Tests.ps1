@@ -116,7 +116,7 @@ Describe 'Static Analysis: Koan Topics' {
     Context 'Library Cleanliness' {
 
         BeforeAll {
-            $KoanFolder = Resolve-Path "$PSScriptRoot/../PSKoans/Koans"
+            $script:KoanFolder = Resolve-Path "$PSScriptRoot/../PSKoans/Koans"
         }
 
         It 'does not have topics with duplicate Koan positions' {

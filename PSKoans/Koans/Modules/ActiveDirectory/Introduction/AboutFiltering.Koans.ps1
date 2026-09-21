@@ -1,5 +1,15 @@
 #Requires -Modules ActiveDirectory
 using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    'sid',
+    Justification = 'Consumed by the ActiveDirectory -Filter string, which the AD provider expands by variable name at runtime rather than PowerShell interpolating it.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    'homeDirectory',
+    Justification = 'Consumed by the ActiveDirectory -Filter string, which the AD provider expands by variable name at runtime rather than PowerShell interpolating it.'
+)]
 [Koan(Position = 101, Module = 'ActiveDirectory')]
 param()
 <#

@@ -27,8 +27,8 @@ Describe 'Basic Number Types' {
     Context 'Double' {
 
         BeforeAll {
-            $Int = 10
-            $Double = 10.0
+            $script:Int = 10
+            $script:Double = 10.0
         }
 
         It 'has a specific object type for integers' {

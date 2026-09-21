@@ -11,7 +11,7 @@ param()
 #>
 Describe 'Group-Object' {
     BeforeAll {
-        $Files = Get-ChildItem -Path $home -Recurse -Depth 2 -File
+        $script:Files = Get-ChildItem -Path $home -Recurse -Depth 2 -File
     }
 
     It 'groups items based on specified properties' {
