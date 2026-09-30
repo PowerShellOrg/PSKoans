@@ -62,7 +62,28 @@ if ($PSCmdlet.ParameterSetName -eq 'Help') {
         Format-Table -Property Name, Description, Alias, DependsOn
 }
 else {
-    Set-BuildEnvironment -Force
-    Invoke-Psake -BuildFile $psakeFile -TaskList $Task -NoLogo
-    exit ([int](-not $psake.build_success))
+    $originalPSModulePath = $env:PSModulePath
+    $userModulePath = $originalPSModulePath -split [IO.Path]::PathSeparator |
+        Where-Object { $_ -like "$HOME$([IO.Path]::DirectorySeparatorChar)*" } |
+        Select-Object -First 1
+
+    if (-not $userModulePath) {
+        throw 'Unable to determine the current-user PowerShell module path.'
+    }
+
+    try {
+        # PowerShellBuild imports Pester with only a minimum version. Exclude a
+        # runner-provided Pester 6 so it retains the Pester 5 dependency imported above.
+        $env:PSModulePath = @(
+            $userModulePath
+            (Join-Path -Path $PSHOME -ChildPath 'Modules')
+        ) -join [IO.Path]::PathSeparator
+
+        Set-BuildEnvironment -Force
+        Invoke-Psake -BuildFile $psakeFile -TaskList $Task -NoLogo
+        exit ([int](-not $psake.build_success))
+    }
+    finally {
+        $env:PSModulePath = $originalPSModulePath
+    }
 }
