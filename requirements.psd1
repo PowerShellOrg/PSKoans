@@ -9,6 +9,7 @@
         Version = '0.7.3'
     }
     'Pester' = @{
+        Version = '5.9.0'
         Parameters = @{
             SkipPublisherCheck = $true
         }
