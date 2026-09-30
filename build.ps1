@@ -81,12 +81,9 @@ else {
     }
 
     try {
-        # PowerShellBuild imports Pester with only a minimum version. Exclude a
-        # runner-provided Pester 6 so it retains the Pester 5 dependency imported above.
-        $env:PSModulePath = @(
-            $userModulePath
-            (Join-Path -Path $PSHOME -ChildPath 'Modules')
-        ) -join [IO.Path]::PathSeparator
+        # PowerShellBuild imports Pester with only a minimum version. Exclude
+        # runner-provided module paths so it retains the Pester 5 dependency imported above.
+        $env:PSModulePath = $userModulePath
 
         Set-BuildEnvironment -Force
         Invoke-Psake -BuildFile $psakeFile -TaskList $Task -NoLogo
