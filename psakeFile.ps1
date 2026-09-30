@@ -27,6 +27,32 @@ Task GenerateFormatData -Depends Clean {
 
 $PSBStageFilesDependency = @('Clean', 'GenerateFormatData')
 $PSBBuildDependency = @('StageFiles')
+$PSBTestDependency = @('Pester5', 'Analyze')
+
+Task Pester5 -Depends $PSBBuildDependency {
+    $moduleManifest = Join-Path $PSBPreference.Build.ModuleOutDir "$($PSBPreference.General.ModuleName).psd1"
+
+    Import-Module -Name $moduleManifest -Force
+    Push-Location -LiteralPath $PSBPreference.Test.RootDir
+    try {
+        $configuration = [PesterConfiguration]::Default
+        $configuration.Output.Verbosity = 'Detailed'
+        $configuration.Run.PassThru = $true
+        $configuration.TestResult.Enabled = $true
+        $configuration.TestResult.OutputPath = $PSBPreference.Test.OutputFile
+        $configuration.TestResult.OutputFormat = $PSBPreference.Test.OutputFormat
+
+        $testResult = Invoke-Pester -Configuration $configuration
+        if ($testResult.Result -eq 'Failed') {
+            throw 'One or more Pester tests failed.'
+        }
+    }
+    finally {
+        Pop-Location
+        Remove-Module -Name $PSBPreference.General.ModuleName -ErrorAction SilentlyContinue
+    }
+} -Description 'Executes Pester 5 tests'
+
 
 Task Default -Depends Test
 
