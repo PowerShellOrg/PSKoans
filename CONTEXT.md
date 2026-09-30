@@ -11,7 +11,7 @@ A single named Pester `It` test representing one question. The learner makes it 
 _Avoid_: exercise, question, test (unqualified)
 
 **Blank**:
-The placeholder token (`__`, `____`, `$____`, `'____'`) inside a Koan that the learner must replace to make it pass. Also the name of the `[Blank]` sentinel class used as the default value in some koans — every comparison against it fails until replaced.
+The placeholder token (`__`, `____`, `$____`, `'____'`) inside a Koan that the learner must replace to make it pass. Also the name of the `[Blank]` sentinel class used as the default value in some koans — it normally compares unequal to every value, including itself, until replaced. PowerShell has an exception: `$true -eq [Blank]` is `$true`, so `____ | Should -BeTrue` can pass.
 _Avoid_: placeholder, stub
 
 **Karma**:
