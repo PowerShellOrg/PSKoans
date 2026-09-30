@@ -5,13 +5,14 @@
     'psake' = @{
         Version = '4.9.1'
     }
-    'PowerShellBuild' = @{
-        Version = '0.7.3'
-    }
     'Pester' = @{
+        Version = '5.9.0'
         Parameters = @{
             SkipPublisherCheck = $true
         }
+    }
+    'PowerShellBuild' = @{
+        Version = '0.8.2'
     }
     'PSScriptAnalyzer' = @{
         Version = '1.19.1'
