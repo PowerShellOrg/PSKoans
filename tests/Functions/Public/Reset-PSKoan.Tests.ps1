@@ -25,7 +25,7 @@ BeforeDiscovery {
 Describe Reset-PSKoan {
 
     BeforeAll {
-        $defaultParams = @{
+        $script:defaultParams = @{
             Confirm = $false
         }
 

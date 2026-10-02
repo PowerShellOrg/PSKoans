@@ -1,4 +1,9 @@
 ﻿using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    'File',
+    Justification = 'Setup value for the blank the learner fills in below with $File; unused until solved.'
+)]
 [Koan(Position = 202)]
 param()
 <#
@@ -32,7 +37,7 @@ Describe 'Alias Provider' {
     #>
     Context 'Direct Access' {
         BeforeAll {
-            $Aliases = Get-ChildItem -Path 'Alias:'
+            $script:Aliases = Get-ChildItem -Path 'Alias:'
         }
 
         It 'can be queried with generic provider cmdlets' {
@@ -181,7 +186,7 @@ especially between Windows, Mac, and Linux, for example.
 
 Describe 'Function Provider' {
     BeforeAll {
-        $Functions = Get-ChildItem -Path 'Function:'
+        $script:Functions = Get-ChildItem -Path 'Function:'
     }
 
     It 'allows access to all currently loaded functions' {

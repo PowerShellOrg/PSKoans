@@ -17,7 +17,7 @@ param()
 Describe 'Splatting' {
 
     BeforeAll {
-        $PSKoansFolder = Get-PSKoanLocation
+        $script:PSKoansFolder = Get-PSKoanLocation
     }
 
     Context 'Hashtable Splatting' {

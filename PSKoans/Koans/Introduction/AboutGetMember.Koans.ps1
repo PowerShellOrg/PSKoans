@@ -66,9 +66,9 @@ Describe "Get Member" {
                 Get-Command -Verb Get
         #>
         BeforeAll {
-            $Cmdlets = [System.Collections.Generic.HashSet[string]]::new()
-            $PropertyString = "property '{0}' should be present in output from {1}"
-            $UniqueString = 'unique cmdlets should be used for each test'
+            $script:Cmdlets = [System.Collections.Generic.HashSet[string]]::new()
+            $script:PropertyString = "property '{0}' should be present in output from {1}"
+            $script:UniqueString = 'unique cmdlets should be used for each test'
         }
 
         It 'lists one of the properties of the first unique command' {
@@ -150,7 +150,7 @@ Describe "Get Member" {
             programming languages treat functions and methods. If for example you want to
             know if a string ends with a certain character, it is necessary that the method knows
             which character you want to compare the string against.
-            
+
             Similar to above, you can inspect the methods available from an
             object that a cmdlet outputs, by changing the -MemberType value
             you provide to Get-Member:
@@ -165,9 +165,9 @@ Describe "Get Member" {
             the objects they output!
         #>
         BeforeAll {
-            $Cmdlets = [System.Collections.Generic.HashSet[string]]::new()
-            $MethodString = "property '{0}' should be present in output from {1}"
-            $UniqueString = 'unique cmdlets should be used for each test'
+            $script:Cmdlets = [System.Collections.Generic.HashSet[string]]::new()
+            $script:MethodString = "property '{0}' should be present in output from {1}"
+            $script:UniqueString = 'unique cmdlets should be used for each test'
         }
 
         It 'lists one of the methods of the first unique command' {

@@ -56,7 +56,7 @@ Describe 'Move-PSKoanLibrary' {
     Context 'Integration Tests' {
 
         BeforeAll {
-            $OldLocation = Get-PSKoanLocation
+            $script:OldLocation = Get-PSKoanLocation
 
             Set-PSKoanLocation -Path 'TestDrive:/PSKoans'
             Update-PSKoan -Confirm:$false

@@ -17,8 +17,13 @@
         hiding the standard test results display.
     #>
 
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSUseOutputTypeCorrectly',
+        '',
+        Justification = 'EndInvoke() returns a PSDataCollection[psobject], but writing that collection to the success stream (line 88) enumerates it, so callers actually receive the contained psobject items one at a time, not the collection itself.'
+    )]
     [CmdletBinding()]
-    [OutputType([PSObject])]
+    [OutputType([psobject])]
     param(
         [Parameter(Position = 0, Mandatory)]
         [Alias('Params')]

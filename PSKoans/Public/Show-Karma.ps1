@@ -71,6 +71,21 @@ function Show-Karma {
     .LINK
         https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
     #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSReviewUnusedParameter',
+        'List',
+        Justification = 'Used only to select the ListKoans parameter sets; dispatch reads $PSCmdlet.ParameterSetName, not the switch value.'
+    )]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSReviewUnusedParameter',
+        'Contemplate',
+        Justification = 'Used only to select the OpenFile parameter sets; dispatch reads $PSCmdlet.ParameterSetName, not the switch value.'
+    )]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSReviewUnusedParameter',
+        'Library',
+        Justification = 'Used only to select the OpenFolder parameter set; dispatch reads $PSCmdlet.ParameterSetName, not the switch value.'
+    )]
     [CmdletBinding(DefaultParameterSetName = 'Default',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Show-Karma.md')]
     [OutputType([void])]

@@ -1,4 +1,19 @@
 using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    'replaceWith',
+    Justification = 'Setup value for the blank the learner fills in below with $replaceWith; unused until solved.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    'greedy',
+    Justification = 'Setup value for the blank the learner fills in below with $greedy; unused until solved.'
+)]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    'lazy',
+    Justification = 'Setup value for the blank the learner fills in below with $lazy; unused until solved.'
+)]
 [Koan(Position = 320)]
 param()
 
@@ -17,7 +32,7 @@ Describe 'Working With Regular Expressions' {
     Context 'Using the -match Operator' {
 
         It 'returns $true if a match is found' {
-            <# 
+            <#
                 In PowerShell, the -match operator returns a boolean result based on whether the
                 pattern (regex) on the right side is found within the string on the left side. Yes,
                 in this case 'string' is a regular expression!
@@ -25,12 +40,12 @@ Describe 'Working With Regular Expressions' {
                 Regex is case sensitive, but -match, along with many other PowerShell operators, perform
                 case-insensitive matching.
             #>
-    
+
             'a string value' -match 'string' | Should -BeTrue
-    
+
             $trueValue = '____'
             $trueValue -match 'climb' | Should -BeTrue
-    
+
         }
 
         It 'returns $false if a match is not found' {
@@ -38,7 +53,7 @@ Describe 'Working With Regular Expressions' {
             $falseValue -match 'climb' | Should -BeFalse
         }
     }
-    
+
     Context 'Using the -replace Operator' {
 
         It 'manipulates strings' {
@@ -48,7 +63,7 @@ Describe 'Working With Regular Expressions' {
                 the string for, and the second is the string to replace the pattern with if it is
                 found in the string.
             #>
-    
+
             $replacePattern = 'simple string'
             $replaceWith = 'string that got something replaced'
             $newString = 'Here is a simple string.' -replace $replacePattern, $____
@@ -61,7 +76,7 @@ Describe 'Working With Regular Expressions' {
             $newString = 'I love that regex is simple' -replace $replacePattern, $replaceWith
             $newString | Should -Be 'I love that regex is flexible'
         }
-        
+
         It 'does not need a second argument' {
             # If you leave out a "replace with" argument, -replace still works
             $replacePattern = ' extra bits'
@@ -99,7 +114,7 @@ Describe 'Working With Regular Expressions' {
                 The Matches() method takes two arguments. In order, they are the string that is
                 being examined, followed by the regular expression being searched for.
             #>
-    
+
             $regexMatch = [Regex]::Matches('Running through a forest', 'through')
             '____' | Should -Be $regexMatch.GetType().FullName
             '____' | Should -Be $regexMatch.Value
@@ -116,7 +131,7 @@ Describe 'Working With Regular Expressions' {
             $optionsMatch = [regex]::Matches($overloadString, 'case', $ignoreCase)
             __ | Should -Be $optionsMatch.Count
         }
-        
+
         It 'can split up strings' {
             <#
                 The [regex] class has a whole lot more in it than just the ::Matches() method. It
@@ -153,12 +168,12 @@ Describe 'Quantifiers' {
         be a single character or a group of characters) that occurs just before the quantifier itself
         may be repeated or omitted entirely in the target string, depending on the quantifier used.
     #>
-    
+
     Context '*' {
 
         BeforeEach {
-            $firstTest = ('pears' -match 'p*ears')
-            $secondTest = ('shears' -match 'p*ears')
+            $script:firstTest = ('pears' -match 'p*ears')
+            $script:secondTest = ('shears' -match 'p*ears')
         }
 
         It 'specifies 0 or more of something' {
@@ -174,19 +189,19 @@ Describe 'Quantifiers' {
 
         It 'does not need to match the entire string' {
             <#
-                What happened in that last example? What part of 'shears' matched the pattern 
+                What happened in that last example? What part of 'shears' matched the pattern
                 'p*ears'? When you use the -match operator, you can see some interesting information
                 in the automatic variable $matches. $matches is a collection of the match objects
                 that are created when you use the -match operator. This isn't as flexible nor as
                 robust as using [regex]::Matches(), but it's handy in a pinch.
-                
+
                 In this case, you'll see that the "sh" in "shears" weren't part of the match. The
                 pattern "zero or more p's, followed by e, a, r, s," is found in the string, even
                 though there are parts of the string that aren't relevant to that matching effort.
-    
+
                 $matches[0] is always your most recent match.
             #>
-    
+
             '____' | Should -Be $matches[0]
         }
 
@@ -203,7 +218,7 @@ Describe 'Quantifiers' {
                 The + symbol is a lot like the *, but instead of matching zero or more, it
                 matches one or more.
             #>
-    
+
             '____' -match 'p+ickles' | Should -BeTrue
         }
 
@@ -221,7 +236,7 @@ Describe 'Quantifiers' {
             # The ? matches "zero or one" of something.
             $____ | Should -Be ('flying through the sky' -match 'f?lying')
         }
-        
+
         It 'does not mind matching 0 of something' {
             $____ | Should -Be ('floating away' -match 'b?oat')
         }
@@ -262,20 +277,20 @@ Describe 'Special Symbols' {
         In regex, there are far more symbols with unique meanings than just quantifiers. What comes
         next is not a definitive guide to EVERY SINGLE ONE, but rather an introduction to some of
         the most common and useful special symbols in regex.
-        
+
         This is ^\where things st\Art getting \weir\D$
     #>
-    
+
 
     Context '. (period)' {
 
         It 'matches any character' {
             # The . (period) matches literally any character
-    
+
             $____ | Should -Be ('Lazy Sunday mornings' -match 'S.nday')
         }
 
-        It 'starts looking kind of weird now' {    
+        It 'starts looking kind of weird now' {
             '____' -match 'invi.a.ion' | Should -BeTrue
         }
     }
@@ -289,12 +304,12 @@ Describe 'Special Symbols' {
                 "literally the letter n". When it's preceded by a backslash, however, that "n" takes
                 on a special meaning. In this case, \n matches new lines. Actually, it matches the
                 encoded character that indicates a new line.
-    
+
                 There are many more regex symbols that are single letters preceded by a backslash.
                 In fact, the backslash is probably the single most important character in all of
                 regex.
             #>
-    
+
             $multiLine = @"
 They might look
 similar and look
@@ -349,7 +364,7 @@ a domestic cat
 
     Context '^ (caret) and $ (dollar sign)' {
 
-        It 'matches the start of lines with ^' {   
+        It 'matches the start of lines with ^' {
             $caretMatch = '____'
             $caretMatch -match '^a' | Should -BeTrue
         }
@@ -367,7 +382,7 @@ a domestic cat
                 \s matches whitespace characters (space, tab, etc.) while \S matches anything other
                 than whitespace
             #>
-    
+
             # Enter either \s or \S - which do you think will work?
             'Room to grow' -match '__' | Should -BeTrue
         }
@@ -391,11 +406,11 @@ a domestic cat
                 can also take special meaning away from characters, even itself. The process of
                 removing the special meaning from a letter in regex is called "escaping".
             #>
-    
+
             # Escape the period character to match a literal period instead of "any character"
             'This . character means something else in regex' -match '\.' | Should -BeTrue
             $matches[0] | Should -Be '____'
-    
+
             $dollarValue = 'The price is $4.99.'
             $dollarMatch = '____'
             [regex]::Matches($dollarValue, $dollarMatch).Value | Should -Be '$4.99'
@@ -415,7 +430,7 @@ Describe 'Brackets and Braces' {
         types of brackets and braces all mean different things. Sometimes other regex symbols
         meanings change when they're found inside some brackets or braces.
     #>
-    
+
     Context '{ and } - Curly Braces' {
 
         It 'works like a custom quantifier' {
@@ -426,7 +441,7 @@ Describe 'Brackets and Braces' {
                 more". Those cover tons of use cases and examples, but there are plenty more
                 situations where you want to be more specific.
             #>
-    
+
             <#
                 The portion of this regex in curly braces acts as a quantifier for the symbol that
                 comes immediately before it. It means "exactly 4 digits."
@@ -469,7 +484,7 @@ Describe 'Brackets and Braces' {
                 therefore be able to reproduce the function of the standard *, +, and ?
                 quantifiers using curly braces.
             #>
-            
+
             $grass = 'Teeny blades of grass'
 
             $plusGrassPattern = 'e+'
@@ -492,11 +507,11 @@ Describe 'Brackets and Braces' {
                 other ways. This is just the tip of the round bracket/regular expression groups
                 iceberg.
             #>
-    
+
             '____' | Should -Be ([regex]::Matches('Bears Beat Bongos', '(B.+){3}').Value)
         }
 
-        It 'does not find just one badger' {    
+        It 'does not find just one badger' {
             $badgers = 'BadgerBadgerBadger'
             $groupingPattern = '(____){__}'
             [regex]::Matches($badgers, $groupingPattern).Value | Should -Be 'BadgerBadgerBadger'
@@ -515,11 +530,11 @@ Describe 'Brackets and Braces' {
 
                 The fancy regex name for this is a "character class".
             #>
-    
+
             $____ | Should -Be ('End of the line' -match '[efg]$')
         }
 
-        It 'wants you to end the string a certain way' {    
+        It 'wants you to end the string a certain way' {
             '____' -match '[abcdefg]$' | Should -BeTrue
         }
 
@@ -531,7 +546,7 @@ Describe 'Brackets and Braces' {
             '____' -match '[^abcdefg]$' | Should -BeTrue
         }
 
-        It 'still needs to match a ^ inside a set' {    
+        It 'still needs to match a ^ inside a set' {
             <#
                 What do you think you might do if you want to match a literal ^ symbol within a set?
                 Use the ^ (caret) symbol in this one.
@@ -545,7 +560,7 @@ Describe 'Brackets and Braces' {
 
 Describe 'Meditative Examples' {
     # Here are some challenges for you to put your new skills to work on.
-    
+
     Context 'Isolate a Username From a domain\username String Using Just One Regex Pattern' {
 
         It 'is handy for isolating parts of strings' {
@@ -557,13 +572,13 @@ Describe 'Meditative Examples' {
     }
 
     Context 'Validate a Bunch of Phone Numbers' {
-        
+
         <#
             Validate a bunch of phone numbers - get rid of the non-numeric characters and check
             which ones are actually the right length to be dialed.
         #>
         BeforeAll {
-            $phoneNumbers = @(
+            $script:phoneNumbers = @(
                 '1 425 555 1234'
                 '1-425-555-4321'
                 '1.425.555.6789'
@@ -571,7 +586,7 @@ Describe 'Meditative Examples' {
                 '+14255556789'
             )
 
-            $sanitizedNumbers = @(
+            $script:sanitizedNumbers = @(
                 '14255551234'
                 '14255554321'
                 '14255556789'

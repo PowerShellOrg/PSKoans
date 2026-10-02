@@ -25,7 +25,7 @@ BeforeDiscovery {
 Describe 'Get-KoanAttribute' {
 
     BeforeAll {
-        $filePath = @{
+        $script:filePath = @{
             Path = Join-Path $TestDrive  -ChildPath 'AboutSomething.Koans.ps1'
         }
     }

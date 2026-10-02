@@ -29,7 +29,7 @@ $SkipTests = $PSVersionTable.PSEdition -ne 'Desktop' -or $PSVersionTable.Platfor
 Describe 'Assert-UnblockedFile' -Skip:$SkipTests {
 
     BeforeAll {
-        $defaultParams = @{
+        $script:defaultParams = @{
             FileInfo = [System.IO.FileInfo](Join-Path -Path $TestDrive -ChildPath 'AboutSomething.Koans.ps1')
             PassThru = $true
         }

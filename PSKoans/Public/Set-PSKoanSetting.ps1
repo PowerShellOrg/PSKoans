@@ -39,7 +39,17 @@ function Set-PSKoanSetting {
     .LINK
         https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
     #>
-    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Single',
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSReviewUnusedParameter',
+        'Value',
+        Justification = 'Referenced inside a nested Select-Object calculated-property scriptblock, which PSScriptAnalyzer does not trace back to the enclosing param.'
+    )]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+        'PSReviewUnusedParameter',
+        'Reset',
+        Justification = 'Used only to select the Reset parameter set; dispatch reads $PSCmdlet.ParameterSetName, not the switch value.'
+    )]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Multiple',
         HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanSetting.md')]
     [OutputType([void])]
     param(
@@ -60,45 +70,47 @@ function Set-PSKoanSetting {
         $Reset
     )
 
-    if ($PSCmdlet.ShouldProcess($script:ConfigPath, "Update configuration file")) {
-        $CurrentSettings = if (Test-Path $script:ConfigPath) {
-            Get-Content -Path $script:ConfigPath | ConvertFrom-Json
-        }
-        else {
-            $ConfigRoot = $script:ConfigPath | Split-Path -Parent
+    process {
+        if ($PSCmdlet.ShouldProcess($script:ConfigPath, "Update configuration file")) {
+            $CurrentSettings = if (Test-Path $script:ConfigPath) {
+                Get-Content -Path $script:ConfigPath | ConvertFrom-Json
+            }
+            else {
+                $ConfigRoot = $script:ConfigPath | Split-Path -Parent
 
-            if (-not (Test-Path $ConfigRoot)) {
-                New-Item -ItemType Directory -Path $ConfigRoot > $null
+                if (-not (Test-Path $ConfigRoot)) {
+                    New-Item -ItemType Directory -Path $ConfigRoot > $null
+                }
+
+                [PSCustomObject]$script:DefaultSettings
             }
 
-            [PSCustomObject]$script:DefaultSettings
-        }
-
-        $NewSettings = switch ($PSCmdlet.ParameterSetName) {
-            'Single' {
-                $CurrentSettings |
-                    Select-Object -Property *, @{ Name = $Name; Expression = { $Value } } -ExcludeProperty $Name
-            }
-            'Multiple' {
-                $Properties = @(
-                    '*'
-                    foreach ($key in $Settings.Keys) {
-                        @{
-                            Name       = $key
-                            Expression = { $Settings[$key] }.GetNewClosure()
+            $NewSettings = switch ($PSCmdlet.ParameterSetName) {
+                'Single' {
+                    $CurrentSettings |
+                        Select-Object -Property *, @{ Name = $Name; Expression = { $Value } } -ExcludeProperty $Name
+                }
+                'Multiple' {
+                    $Properties = @(
+                        '*'
+                        foreach ($key in $Settings.Keys) {
+                            @{
+                                Name       = $key
+                                Expression = { $Settings[$key] }.GetNewClosure()
+                            }
                         }
-                    }
-                )
-                $CurrentSettings |
-                    Select-Object -Property $Properties -ExcludeProperty $Settings.Keys.ForEach{ $_ }
+                    )
+                    $CurrentSettings |
+                        Select-Object -Property $Properties -ExcludeProperty $Settings.Keys.ForEach{ $_ }
+                }
+                'Reset' {
+                    $CurrentSettings
+                }
             }
-            'Reset' {
-                $CurrentSettings
-            }
-        }
 
-        $NewSettings |
-            ConvertTo-Json |
-            Set-Content -Path $script:ConfigPath
+            $NewSettings |
+                ConvertTo-Json |
+                Set-Content -Path $script:ConfigPath
+        }
     }
 }

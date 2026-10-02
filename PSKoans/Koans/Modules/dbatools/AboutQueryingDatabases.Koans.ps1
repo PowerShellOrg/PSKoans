@@ -75,7 +75,7 @@ Describe "Invoke-DbaQuery" {
             We've created a file called SimpleTSQL.sql that contains a T-SQL statement, which we want to
             run against the tempdb database on the localhost instance.
         #>
-        Out-File - FilePath TestDrive:\SimpleTSQL.sql -InputObject "SELECT 'From a File' AS Origin;"
+        Out-File -FilePath TestDrive:\SimpleTSQL.sql -InputObject "SELECT 'From a File' AS Origin;"
         $InvokeDbaQueryParams = @{
             SqlInstance = 'localhost'
             Database    = 'tempdb'

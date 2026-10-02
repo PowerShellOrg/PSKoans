@@ -1,4 +1,9 @@
 ﻿using module PSKoans
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSReviewUnusedParameter',
+    'Item',
+    Justification = 'Second $Filter is a blank scriptblock body the learner completes; $Item is unused until solved.'
+)]
 [Koan(Position = 301)]
 param()
 <#
@@ -125,10 +130,10 @@ Describe 'Lists' {
             #>
             $Filter = {
                 # The input variable representing each entry must be named, or use $args[0].
-                param($_)
+                param($Item)
 
                 # Remove everything that contains the number 9, essentially.
-                $_ -match '9'
+                $Item -match '9'
                 # The output must boil down to a $true/$false, or will be coerced to it.
             }
             $List.RemoveAll($Filter) | Should -BeTrue
@@ -137,7 +142,7 @@ Describe 'Lists' {
             $List | Should -Be $RemainingEntries
 
             $Filter = {
-                param($_)
+                param($Item)
                 # Fill in this script block to make the below assertions true!
 
             }

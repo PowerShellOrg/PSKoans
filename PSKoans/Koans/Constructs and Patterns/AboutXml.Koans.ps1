@@ -12,9 +12,9 @@ param()
 #>
 Describe 'About XML' {
     BeforeAll {
-        $path = Join-Path $TestDrive -ChildPath document.xml
+        $script:path = Join-Path $TestDrive -ChildPath document.xml
     }
-    
+
     Context 'XML as an object' {
 
         It 'can cast a string to an XML document' {
