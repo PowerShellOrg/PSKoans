@@ -66,10 +66,10 @@ function Show-Karma {
         Author: Joel Sallow (@vexx32)
 
     .LINK
-        https://github.com/vexx32/PSKoans/blob/main/docs/Get-Karma.md
+        https://github.com/PowerShellOrg/PSKoans/blob/main/docs/Get-Karma.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
         'PSReviewUnusedParameter',
@@ -87,7 +87,7 @@ function Show-Karma {
         Justification = 'Used only to select the OpenFolder parameter set; dispatch reads $PSCmdlet.ParameterSetName, not the switch value.'
     )]
     [CmdletBinding(DefaultParameterSetName = 'Default',
-        HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Show-Karma.md')]
+        HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Show-Karma.md')]
     [OutputType([void])]
     [Alias('Invoke-PSKoans', 'Test-Koans', 'Get-Enlightenment', 'Meditate', 'Clear-Path', 'Measure-Karma')]
     param(

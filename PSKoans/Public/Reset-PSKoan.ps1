@@ -65,16 +65,16 @@ function Reset-PSKoan {
         Author: Chris Dent (@indented-automation)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoan.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Update-PSKoan.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Update-PSKoan.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High',
-        HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Reset-PSKoan.md',
+        HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Reset-PSKoan.md',
         PositionalBinding = $false,
         DefaultParameterSetName = 'NameOnly')]
     [OutputType([void])]

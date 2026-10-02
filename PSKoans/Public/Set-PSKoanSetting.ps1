@@ -28,16 +28,16 @@ function Set-PSKoanSetting {
 
         Sets the text editor used for `Show-Karma -Contemplate` to GitHub Atom. For a
         list of text editors known to PSKoans, see Example 2 in the documentation for
-        [Show-Karma -Contemplate](https://github.com/vexx32/PSKoans/tree/main/docs/Show-Karma.md).
+        [Show-Karma -Contemplate](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Show-Karma.md).
 
     .NOTES
         Author: Joel Sallow (@vexx32)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoanSetting.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoanSetting.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
         'PSReviewUnusedParameter',
@@ -50,7 +50,7 @@ function Set-PSKoanSetting {
         Justification = 'Used only to select the Reset parameter set; dispatch reads $PSCmdlet.ParameterSetName, not the switch value.'
     )]
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium', DefaultParameterSetName = 'Multiple',
-        HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanSetting.md')]
+        HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Set-PSKoanSetting.md')]
     [OutputType([void])]
     param(
         [Parameter(Position = 0, Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'Single')]

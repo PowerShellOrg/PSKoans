@@ -328,8 +328,8 @@ Your contributions and involvement will help to ensure the growth and success of
 [git]: https://git-scm.com/downloads
 [github]: http://github.com
 [github-desktop]: https://desktop.github.com
-[pskoans]: https://github.com/vexx32/PSKoans
-[pskoans-issues]: https://github.com/vexx32/PSKoans/issues
+[pskoans]: https://github.com/PowerShellOrg/PSKoans
+[pskoans-issues]: https://github.com/PowerShellOrg/PSKoans/issues
 [vscode]: https://code.visualstudio.com
 [vscode-powershell]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell
 [vscode-powershell-preview]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell-Pre

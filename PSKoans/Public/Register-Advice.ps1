@@ -19,13 +19,13 @@
         Author: Friedrich Weinmann (@FriedrichWeinmann)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Show-Advice.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Show-Advice.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low',
-        HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Register-Advice.md')]
+        HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Register-Advice.md')]
     [OutputType([void])]
     param(
         [Parameter(Position = 0)]

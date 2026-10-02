@@ -77,7 +77,7 @@ PS> OOPTestAnswers -Test doggoNose
 https://github.com/Sudoblark/PSKoans
 
 .LINK 
-https://github.com/vexx32/PSKoans
+https://github.com/PowerShellOrg/PSKoans
 #>
     return $ResultsHash[$Test]
 }

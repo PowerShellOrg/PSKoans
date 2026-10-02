@@ -42,16 +42,16 @@ function Update-PSKoan {
         Author: Chris Dent (@indented-automation)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoan.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Reset-PSKoan.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Reset-PSKoan.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = 'TopicOnly', ConfirmImpact = "High",
-        HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Update-PSKoan.md')]
+        HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Update-PSKoan.md')]
     [OutputType([void])]
     param(
         [Parameter()]

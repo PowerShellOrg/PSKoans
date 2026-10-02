@@ -1,7 +1,7 @@
 ---
 external help file: PSKoans-help.xml
 Module Name: PSKoans
-online version: https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md
+online version: https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoan.md
 schema: 2.0.0
 ---
 
@@ -205,6 +205,6 @@ Author: Chris Dent (@indented-automation)
 
 ## RELATED LINKS
 
-[Get-PSKoan](https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md)
+[Get-PSKoan](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoan.md)
 
-[PSKoans](https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md)
+[PSKoans](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md)

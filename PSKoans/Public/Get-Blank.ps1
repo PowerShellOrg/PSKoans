@@ -36,7 +36,7 @@
         Author: Joel Sallow (@vexx32)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
         'PSReviewUnusedParameter',
@@ -53,7 +53,7 @@
         '',
         Justification = 'Piped input is intentionally discarded, not processed per-item; a process block would add no behavior.'
     )]
-    [CmdletBinding(HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Get-Blank.md')]
+    [CmdletBinding(HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-Blank.md')]
     [OutputType('Blank')]
     [Alias('__', '____', 'FILL_ME_IN')]
     param(

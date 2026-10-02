@@ -157,10 +157,10 @@
             )
 
             # A URL to the license for this module.
-            LicenseUri = 'https://github.com/vexx32/PSKoans/blob/main/LICENSE'
+            LicenseUri = 'https://github.com/PowerShellOrg/PSKoans/blob/main/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/vexx32/PSKoans'
+            ProjectUri = 'https://github.com/PowerShellOrg/PSKoans'
 
             # A URL to an icon representing this module.
             # IconUri = ''

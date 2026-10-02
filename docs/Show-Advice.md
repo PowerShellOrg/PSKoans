@@ -1,7 +1,7 @@
 ---
 external help file: PSKoans-help.xml
 Module Name: PSKoans
-online version: https://github.com/vexx32/PSKoans/tree/main/docs/Show-Advice.md
+online version: https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Show-Advice.md
 schema: 2.0.0
 ---
 
@@ -69,6 +69,6 @@ Author: Friedrich Weinmann (@FriedrichWeinmann)
 
 ## RELATED LINKS
 
-[Register-Advice](https://github.com/vexx32/PSKoans/tree/main/docs/Register-Advice.md)
+[Register-Advice](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Register-Advice.md)
 
-[PSKoans](https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md)
+[PSKoans](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md)

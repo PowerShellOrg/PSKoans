@@ -20,16 +20,16 @@ function Move-PSKoanLibrary {
         Author: Joel Sallow (@vexx32)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanSetting.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Set-PSKoanSetting.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoanSetting.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoanSetting.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium',
-        HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Move-PSKoanLibrary.md')]
+        HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Move-PSKoanLibrary.md')]
     [OutputType([void])]
     param(
         [Parameter(Mandatory, Position = 0, ValueFromPipeline)]

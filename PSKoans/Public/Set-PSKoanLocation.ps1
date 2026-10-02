@@ -28,16 +28,16 @@ function Set-PSKoanLocation {
         You can optionally populate it yourself by running `Show-Karma -Reset` following use of this cmdlet.
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoanLocation.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoanLocation.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Move-PSKoanLibrary.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Move-PSKoanLibrary.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium',
-        HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanLocation.md')]
+        HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Set-PSKoanLocation.md')]
     [OutputType([void])]
     param(
         [Parameter(Mandatory, Position = 0)]

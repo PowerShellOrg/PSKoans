@@ -60,10 +60,10 @@ function Get-PSKoan {
         Author: Chris Dent (@indented-automation)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoan.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
         'PSReviewUnusedParameter',
@@ -76,7 +76,7 @@ function Get-PSKoan {
         Justification = 'Used only to select the ListModules parameter set; dispatch reads $PSCmdlet.ParameterSetName, not the switch value.'
     )]
     [CmdletBinding(DefaultParameterSetName = 'IncludeModule',
-        HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md')]
+        HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoan.md')]
     [OutputType('PSKoans.KoanInfo')]
     param(
         [Parameter()]

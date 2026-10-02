@@ -1,7 +1,7 @@
 ---
 external help file: PSKoans-help.xml
 Module Name: PSKoans
-online version: https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanLocation.md
+online version: https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Set-PSKoanLocation.md
 schema: 2.0.0
 ---
 
@@ -125,8 +125,8 @@ You can optionally populate it yourself by running `Show-Karma -Reset` following
 
 ## RELATED LINKS
 
-[Get-PSKoanLocation](https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoanLocation.md)
+[Get-PSKoanLocation](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoanLocation.md)
 
-[Move-PSKoanLibrary](https://github.com/vexx32/PSKoans/tree/main/docs/Move-PSKoanLibrary.md)
+[Move-PSKoanLibrary](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Move-PSKoanLibrary.md)
 
-[PSKoans](https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md)
+[PSKoans](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md)
