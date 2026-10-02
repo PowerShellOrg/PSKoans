@@ -35,13 +35,13 @@
         Author: Joel Sallow (@vexx32)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Get-Karma.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-Karma.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default',
-        HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Get-Karma.md')]
+        HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-Karma.md')]
     [OutputType('PSKoans.Result', 'PSKoans.CompleteResult')]
     [Alias()]
     param(

@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: ❓ Ask a Question
-    url: https://github.com/vexx32/PSKoans/discussions?discussions_q=category%3AQ%26A
+    url: https://github.com/PowerShellOrg/PSKoans/discussions?discussions_q=category%3AQ%26A
     about: Ask a general question or look for help with specific koans you're having difficulty with.
   - name: 💬 Discuss Koans
-    url: https://github.com/vexx32/PSKoans/discussions?discussions_q=category%3AGeneral
+    url: https://github.com/PowerShellOrg/PSKoans/discussions?discussions_q=category%3AGeneral
     about: Talk about koans that need some work or new ones you'd like to see, discuss how they could work and what needs to be covered.
   - name: 💬 Discuss Module Features
-    url: https://github.com/vexx32/PSKoans/discussions?discussions_q=category%3AIdeas
+    url: https://github.com/PowerShellOrg/PSKoans/discussions?discussions_q=category%3AIdeas
     about: Discuss features / enhancements you'd like to see in the module.

@@ -1,7 +1,7 @@
 ---
 external help file: PSKoans-help.xml
 Module Name: PSKoans
-online version: https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanSetting.md
+online version: https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Set-PSKoanSetting.md
 schema: 2.0.0
 ---
 
@@ -53,7 +53,7 @@ Set-PSKoanSetting -Name Editor -Value "atom"
 
 Sets the text editor used for `Show-Karma -Contemplate` to GitHub Atom. For a
 list of text editors known to PSKoans, see Example 2 in the documentation for
-[Show-Karma -Contemplate](https://github.com/vexx32/PSKoans/tree/main/docs/Show-Karma.md).
+[Show-Karma -Contemplate](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Show-Karma.md).
 
 ## PARAMETERS
 
@@ -170,6 +170,6 @@ Author: Joel Sallow (@vexx32)
 
 ## RELATED LINKS
 
-[Get-PSKoanSetting](https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoanSetting.md)
+[Get-PSKoanSetting](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoanSetting.md)
 
-[PSKoans](https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md)
+[PSKoans](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md)

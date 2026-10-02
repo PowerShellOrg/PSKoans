@@ -165,8 +165,8 @@ Author: Chris Dent (@indented-automation)
 
 ## RELATED LINKS
 
-[Get-PSKoan](https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoan.md)
+[Get-PSKoan](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoan.md)
 
-[Reset-PSKoan](https://github.com/vexx32/PSKoans/tree/main/docs/Reset-PSKoan.md)
+[Reset-PSKoan](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Reset-PSKoan.md)
 
-[PSKoans](https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md)
+[PSKoans](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md)

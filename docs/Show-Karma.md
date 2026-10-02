@@ -1,7 +1,7 @@
 ---
 external help file: PSKoans-help.xml
 Module Name: PSKoans
-online version: https://github.com/vexx32/PSKoans/tree/main/docs/Show-Karma.md
+online version: https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Show-Karma.md
 schema: 2.0.0
 ---
 
@@ -270,8 +270,8 @@ Author: Joel Sallow (@vexx32)
 
 ## RELATED LINKS
 
-[Get-Karma](https://github.com/vexx32/PSKoans/blob/main/docs/Get-Karma.md)
+[Get-Karma](https://github.com/PowerShellOrg/PSKoans/blob/main/docs/Get-Karma.md)
 
-[Set-PSKoanSetting](https://github.com/vexx32/PSKoans/blob/main/docs/Get-Karma.md)
+[Set-PSKoanSetting](https://github.com/PowerShellOrg/PSKoans/blob/main/docs/Set-PSKoanSetting.md)
 
-[PSKoans](https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md)
+[PSKoans](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md)

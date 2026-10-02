@@ -19,7 +19,7 @@
         Author: Joel Sallow
         Module: PSKoans
     .LINK
-        https://github.com/vexx32/PSKoans
+        https://github.com/PowerShellOrg/PSKoans
     #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute(
         'PSUseDeclaredVarsMoreThanAssignments',

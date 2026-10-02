@@ -18,9 +18,9 @@ function Get-PSKoanLocation {
         Author: Joel Sallow (@vexx32)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
-    [CmdletBinding(HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoanLocation.md')]
+    [CmdletBinding(HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoanLocation.md')]
     [OutputType([string])]
     param()
     process {

@@ -28,12 +28,12 @@ function Get-PSKoanSetting {
         Author: Joel Sallow (@vexx32)
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/Set-PSKoanSetting.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Set-PSKoanSetting.md
 
     .LINK
-        https://github.com/vexx32/PSKoans/tree/main/docs/PSKoans.md
+        https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md
     #>
-    [CmdletBinding(HelpUri = 'https://github.com/vexx32/PSKoans/tree/main/docs/Get-PSKoanSetting.md')]
+    [CmdletBinding(HelpUri = 'https://github.com/PowerShellOrg/PSKoans/tree/main/docs/Get-PSKoanSetting.md')]
     [OutputType([string], [PSCustomObject])]
     param(
         [Parameter()]
