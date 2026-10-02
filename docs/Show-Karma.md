@@ -272,6 +272,6 @@ Author: Joel Sallow (@vexx32)
 
 [Get-Karma](https://github.com/PowerShellOrg/PSKoans/blob/main/docs/Get-Karma.md)
 
-[Set-PSKoanSetting](https://github.com/PowerShellOrg/PSKoans/blob/main/docs/Get-Karma.md)
+[Set-PSKoanSetting](https://github.com/PowerShellOrg/PSKoans/blob/main/docs/Set-PSKoanSetting.md)
 
 [PSKoans](https://github.com/PowerShellOrg/PSKoans/tree/main/docs/PSKoans.md)
