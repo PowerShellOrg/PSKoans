@@ -2,12 +2,6 @@
 
 [![PSKoans Logo][logo-64]][logo-svg]
 
-## About the Author
-
-### Joel Sallow
-
-- [Blog][blog]
-- [Twitter][twitter]
 
 ## Synopsis
 
@@ -163,11 +157,14 @@ If you would like to contribute to PSKoans, please check out the [Contributing][
 
 If you would like to support the project, you can:
 
-- [Sponsor me on Github][github-sponsor]
+- [Sponsor Rain on GitHub][github-sponsor]
 - [Become a Patreon Patron][patreon]
-- [Donate with Ko-fi][ko-fi]
+- [Donate to Rain with Ko-fi][ko-fi]
 
-[blog]: https://vexx32.github.io
+## Special Thanks
+
+PowerShell Koans was created by Rain.
+
 [contributing]: CONTRIBUTING.md
 [define-koan]: https://en.wikipedia.org/wiki/K%C5%8Dan
 [fsharp-koans]: https://github.com/ChrisMarinos/FSharpKoans
@@ -186,4 +183,3 @@ If you would like to support the project, you can:
 [reference-docs]: docs/PSKoans.md
 [show-karma-1]: images/Show-Karma_1.png
 [show-karma-2]: images/Show-Karma_2.png
-[twitter]: https://twitter.com/vexx32
