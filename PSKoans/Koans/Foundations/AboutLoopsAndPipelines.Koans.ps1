@@ -175,4 +175,119 @@ Describe 'Pipelines and Loops' {
             __ | Should -Be $Values
         }
     }
+
+    Context 'Loops and Keywords' {
+        
+        It 'is possible to break a standard loop' {
+            <#
+                Standard loops in PowerShell can be broken out of using the keyword "break".
+                This does not work the same way for pipeline cmdlets.
+            #>
+            $Values = foreach ($Number in 1..5) {
+                $Number
+                break
+            }
+            __ | Should -Be $Values # How quickly did we break?
+        }
+        
+        It 'is possible to skip iterations of a standard loop' {
+            <#
+                Iterations can be skipped in standard PowerShell loops by using the keyword "continue".
+                This is useful for scenarios such as when code should only run if a condition is true,
+                or the opposite.
+            #>
+            $Values = foreach ($Number in 1..5) {
+                <#
+                    Sometimes you don't want to run the whole loop iteration. It can be used as a way
+                    to exclude values from a loop, or to speed up processing.
+                #>
+                if ($Number -eq 3) {
+                    continue
+                }
+
+                $Number
+            }
+
+            $Values | Should -Be @(
+                __
+                __
+                __
+                __
+            )
+        }
+        
+        It 'is possible to return a value from a standard loop' {
+            <#
+                Loops in PowerShell can also have values returned from them using
+                the keyword "return". Returning a value stops the loop immediately
+                and outputs the value from the current scope.
+
+                Outputting using return in a loop will not respect any variable assignments
+                in the same scope.
+            #>
+            $Number = 5
+            $Values = $Number
+
+            $Values += while ($Number -lt 10) {
+                # While loops can also imitate For loops by increment an existing variable.
+                $Number++
+                
+                if ($Number -gt 7) {
+                    return ($Number - 5) # "return" stops running any more code in the current scope
+                }
+            }
+
+            # What did return do? Does Values pick up the result?
+            __ | Should -Be $Values
+        }
+
+        It 'has the same name but not the same behaviour' {
+            <#
+                PowerShell has a standard loop named foreach, but "foreach" is also an alias
+                of the cmdlet ForEach-Object when it's put in a pipeline.
+
+                This can be confusing, since they don't have the same behaviour with keywords!
+                This is especially true for break and continue, but return as well. Using these
+                keywords in a pipeline can be dangerous.
+            #>
+
+            $Values = 10 # Set $Values to 10 before the pipeline, then assign it to the output
+            $Values = 1..5 |
+                <#
+                    Be careful with using the foreach alias for ForEach-Object. The keyword "break"
+                    will not break only the loop when used in a pipeline, as with a standard loop.
+
+                    Using keywords in pipelines can have unexpected results. In the worst case it
+                    might terminate your entire running script or code, or alter the behaviour.
+                #>
+                foreach {
+                    $_
+                    break
+                }
+            $Values = 20 # Is the re-assigning of $Values respected with a dangerous pipeline-break?
+
+            # How broken was the loop?
+            __ | Should -Be $Values
+        }
+
+        It 'returns differently when used in a pipeline' {
+            <#
+                Returning a value from a whole pipeline is not a valid operation. When using "return"
+                in a pipeline, it just returns the value from the current iteration, but does not break
+                the pipeline.
+            #>
+
+            $Values = 1..5 | ForEach-Object {
+                    return ($_ + 5) # Returning a value from a pipeline is only done from the current iteration
+                }
+
+            $Values | Should -Be @(
+                __
+                __
+                __
+                __
+                __
+            )
+        }
+    }
 }
