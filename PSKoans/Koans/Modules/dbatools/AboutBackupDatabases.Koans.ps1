@@ -28,14 +28,14 @@ Describe "Backup-DbaDatabase" {
 
                 [PSCustomObject]@{
                     ComputerName = 'localhost'
-                    SqlInstance = $ENV:COMPUTERNAME
-                    Database = ('Database_{0:d2}' -f $_)
-                    Type = 'Full'
-                    TotalSize = ('{0}' -f ([Math]::PI * $_))
-                    DeviceType = 'Disk'
-                    Start = $RestoreStart
-                    Duration = $RestoreEnd - $RestoreStart
-                    End = $RestoreEnd
+                    SqlInstance  = $ENV:COMPUTERNAME
+                    Database     = ('Database_{0:d2}' -f $_)
+                    Type         = 'Full'
+                    TotalSize    = ('{0}' -f ([Math]::PI * $_))
+                    DeviceType   = 'Disk'
+                    Start        = $RestoreStart
+                    Duration     = $RestoreEnd - $RestoreStart
+                    End          = $RestoreEnd
                 }
                 $StartDate = $RestoreEnd
             }
@@ -48,14 +48,14 @@ Describe "Backup-DbaDatabase" {
 
                 [PSCustomObject]@{
                     ComputerName = 'localhost'
-                    SqlInstance = $ENV:COMPUTERNAME
-                    Database = ('Database_{0:d2}' -f $_)
-                    Type = 'Full'
-                    TotalSize = ('{0}' -f ([Math]::PI * $_))
-                    DeviceType = 'Disk'
-                    Start = $RestoreStart
-                    Duration = $RestoreEnd - $RestoreStart
-                    End = $RestoreEnd
+                    SqlInstance  = $ENV:COMPUTERNAME
+                    Database     = ('Database_{0:d2}' -f $_)
+                    Type         = 'Full'
+                    TotalSize    = ('{0}' -f ([Math]::PI * $_))
+                    DeviceType   = 'Disk'
+                    Start        = $RestoreStart
+                    Duration     = $RestoreEnd - $RestoreStart
+                    End          = $RestoreEnd
                 }
 
                 $StartDate = $RestoreEnd
@@ -68,14 +68,14 @@ Describe "Backup-DbaDatabase" {
             $RestoreEnd = $StartDate.AddSeconds(5)
             [PSCustomObject]@{
                 ComputerName = 'localhost'
-                SqlInstance = $ENV:COMPUTERNAME
-                Database = 'Database_01'
-                Type = 'Differential'
-                TotalSize = ('{0}' -f ([Math]::PI))
-                DeviceType = 'Disk'
-                Start = $StartDate
-                Duration = $RestoreEnd - $StartDate
-                End = $RestoreEnd
+                SqlInstance  = $ENV:COMPUTERNAME
+                Database     = 'Database_01'
+                Type         = 'Differential'
+                TotalSize    = ('{0}' -f ([Math]::PI))
+                DeviceType   = 'Disk'
+                Start        = $StartDate
+                Duration     = $RestoreEnd - $StartDate
+                End          = $RestoreEnd
             }
         } -ParameterFilter {
             $_.Type -eq 'Differential'
@@ -85,15 +85,15 @@ Describe "Backup-DbaDatabase" {
             $RestoreEnd = $StartDate.AddSeconds(5)
             [PSCustomObject]@{
                 ComputerName = 'localhost'
-                SqlInstance = $ENV:COMPUTERNAME
-                Database = 'Database_01'
-                Type = 'Differential'
-                TotalSize = ('{0}' -f ([Math]::PI))
-                DeviceType = 'Disk'
-                Start = $StartDate
-                Duration = $RestoreEnd - $StartDate
-                End = $RestoreEnd
-                Path = 'E:\Backups\Database_01_201901011200.bak'
+                SqlInstance  = $ENV:COMPUTERNAME
+                Database     = 'Database_01'
+                Type         = 'Differential'
+                TotalSize    = ('{0}' -f ([Math]::PI))
+                DeviceType   = 'Disk'
+                Start        = $StartDate
+                Duration     = $RestoreEnd - $StartDate
+                End          = $RestoreEnd
+                Path         = 'E:\Backups\Database_01_201901011200.bak'
             }
         } -ParameterFilter {
             $_.Path -like 'E:\Backups\*'
@@ -103,15 +103,15 @@ Describe "Backup-DbaDatabase" {
             $RestoreEnd = $StartDate.AddSeconds(5)
             [PSCustomObject]@{
                 ComputerName = 'localhost'
-                SqlInstance = $ENV:COMPUTERNAME
-                Database = 'Database_01'
-                Type = 'Differential'
-                TotalSize = ('{0}' -f ([Math]::PI))
-                DeviceType = 'Disk'
-                Start = $StartDate
-                Duration = $RestoreEnd - $StartDate
-                End = $RestoreEnd
-                Path = 'E:\Backups\Database01-Full.bak'
+                SqlInstance  = $ENV:COMPUTERNAME
+                Database     = 'Database_01'
+                Type         = 'Differential'
+                TotalSize    = ('{0}' -f ([Math]::PI))
+                DeviceType   = 'Disk'
+                Start        = $StartDate
+                Duration     = $RestoreEnd - $StartDate
+                End          = $RestoreEnd
+                Path         = 'E:\Backups\Database01-Full.bak'
             }
         } -ParameterFilter {
             $_.FilePath -eq 'dbname-backuptype.bak'

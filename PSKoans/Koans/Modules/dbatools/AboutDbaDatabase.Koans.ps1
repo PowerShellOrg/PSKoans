@@ -19,15 +19,182 @@ Describe 'Get-DbaDatabase' {
     #>
     BeforeAll {
         Mock -CommandName Get-DbaDatabase -MockWith {
-            Import-Clixml -Path .\PSKoans\Koans\dbatools\Mocks\Database_All.xml
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'testdb'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'LogBackup'
+                SizeMB             = '95.275'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 19:56:36'
+                LastDiffBackup     = '26/02/2019 13:00:31'
+                LastLogBackup      = '26/02/2019 20:00:02'
+            },
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'tempdb'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'Nothing'
+                SizeMB             = '46.13'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 19:57:35'
+                LastDiffBackup     = '26/02/2019 13:03:43'
+                LastLogBackup      = '26/02/2019 20:02:57'
+            },
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'primary'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'Nothing'
+                SizeMB             = '29.56'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 19:59:39'
+                LastDiffBackup     = '26/02/2019 13:01:29'
+                LastLogBackup      = '26/02/2019 20:04:34'
+            },
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'model'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'Nothing'
+                SizeMB             = '39.68'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 20:01:03'
+                LastDiffBackup     = '26/02/2019 13:02:30'
+                LastLogBackup      = '26/02/2019 20:01:19'
+            },
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'msdb'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'Nothing'
+                SizeMB             = '79.29'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 19:59:54'
+                LastDiffBackup     = '26/02/2019 13:05:07'
+                LastLogBackup      = '26/02/2019 20:04:01'
+            }
         } -ParameterFilter { $_.SqlInstance -eq 'localhost' }
 
         Mock -CommandName Get-DbaDatabase -MockWith {
-            Import-Clixml -Path .\PSKoans\Koans\dbatools\Mocks\Database_TestDb.xml
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'testdb'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'LogBackup'
+                SizeMB             = '95.275'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 19:56:36'
+                LastDiffBackup     = '26/02/2019 13:00:31'
+                LastLogBackup      = '26/02/2019 20:00:02'
+            }
         } -ParameterFilter { $_.SqlInstance -eq 'localhost' -and $_.Database -eq 'testdb' }
 
         Mock -CommandName Get-DbaDatabase -MockWith {
-            Import-Clixml -Path .\PSKoans\Koans\dbatools\Mocks\Database_System.xml
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'tempdb'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'Nothing'
+                SizeMB             = '46.13'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 19:57:35'
+                LastDiffBackup     = '26/02/2019 13:03:43'
+                LastLogBackup      = '26/02/2019 20:02:57'
+            },
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'primary'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'Nothing'
+                SizeMB             = '29.56'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 19:59:39'
+                LastDiffBackup     = '26/02/2019 13:01:29'
+                LastLogBackup      = '26/02/2019 20:04:34'
+            },
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'model'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'Nothing'
+                SizeMB             = '39.68'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 20:01:03'
+                LastDiffBackup     = '26/02/2019 13:02:30'
+                LastLogBackup      = '26/02/2019 20:01:19'
+            },
+            [PSCustomObject]@{
+                ComputerName       = 'Server01'
+                InstanceName       = 'MSSQLSERVER'
+                SqlInstance        = 'Server01'
+                Name               = 'msdb'
+                Status             = 'Normal'
+                IsAccessible       = 'True'
+                RecoveryModel      = 'Full'
+                LogReuseWaitStatus = 'Nothing'
+                SizeMB             = '79.29'
+                Compatibility      = 'Version120'
+                Collation          = 'Latin1_General_CI_AS'
+                Owner              = 'sa'
+                LastFullBackup     = '26/02/2019 19:59:54'
+                LastDiffBackup     = '26/02/2019 13:05:07'
+                LastLogBackup      = '26/02/2019 20:04:01'
+            }
         } -ParameterFilter { $_.SqlInstance -eq 'localhost' -and $_.ExcludeUser }
 
         Mock -CommandName Get-DbaDatabase -MockWith {
@@ -82,7 +249,7 @@ Describe 'Get-DbaDatabase' {
             -ExcludeSystem parameter switch.
         #>
         $SystemDbParams = @{
-            SqlInstance = 'localhost'
+            SqlInstance  = 'localhost'
             ExludeSystem = ____
         }
         $SystemDbsExluded = Get-DbaDatabase @SystemDbParams
