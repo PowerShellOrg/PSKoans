@@ -153,17 +153,13 @@ Get-PSKoanLocation | Remove-Item -Recurse
 
 If you would like to contribute to PSKoans, please check out the [Contributing][contributing] document.
 
-## Support the Project
+## Special Thanks
 
-If you would like to support the project, you can:
+PowerShell Koans was created by Rain. To support Rain's work, you can:
 
 - [Sponsor Rain on GitHub][github-sponsor]
 - [Become a Patreon Patron][patreon]
 - [Donate to Rain with Ko-fi][ko-fi]
-
-## Special Thanks
-
-PowerShell Koans was created by Rain.
 
 [contributing]: CONTRIBUTING.md
 [define-koan]: https://en.wikipedia.org/wiki/K%C5%8Dan
